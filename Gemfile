@@ -9,6 +9,10 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.3'
 gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
+#Report problems in source code
+gem 'rubocop-rails', require: false
+gem 'fasterer'
+gem 'overcommit'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
