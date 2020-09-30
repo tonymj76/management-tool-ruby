@@ -16,7 +16,7 @@ default: &default
 
 development:
   adapter: postgresql
-  database: project-management-db
+  database: project_management_db
   encoding: utf8
   username: postgres
   password: password
