@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: postgresql
+  adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
@@ -13,14 +13,17 @@ default: &default
 #   <<: *default
 #   url: <%= ENV['DATABASE_URI'] %>
 #   sslmode: "require"
-
 development:
-  adapter: postgresql
-  database: project-management-db
-  encoding: utf8
-  username: postgres
-  password: password
-  host: localhost
+  <<: *default
+  database: db/development.sqlite3
+
+# development:
+#   adapter: postgresql
+#   database: project_management_db
+#   encoding: utf8
+#   username: postgres
+#   password: password
+#   host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
