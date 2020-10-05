@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-md navbar-light bg-secondary mb-5">
+      <a href="#" class="navbar-brand text-white">Awesome-PM</a>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+          <% if logged_in? %>
+            <div class="navbar-nav ml-auto">
+              <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-item nav-link text-white' %>
+            </div> 
+          <% else %>
+            <div class="navbar-nav ml-auto">
+              <%= link_to 'Sign in', new_user_session_path, class: 'nav-item nav-link text-white' %>
+              <%= link_to 'Sign up', new_user_registration_path, class: 'nav-item nav-link text-white' %>
+            </div>
+          <% end %>
+      </div>
+    </nav>

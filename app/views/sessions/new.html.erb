@@ -1,19 +1,11 @@
-<%= form_with(model: @user, local: true) do |f| %>
+<%= form_with(model: @user, url: user_session_path, local: true) do |f| %>
     <div class="container">
       <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
           <div class="card card-signin my-5">
             <div class="card-body">
-              <h5 class="card-title text-center">Create Account</h5>
+              <h5 class="card-title text-center">Sign In</h5>
               <form class="form-signin">
-                <div class="form-label-group">
-                  <%= f.label :First_name %><br />
-                  <%= f.text_field :firstname, autofocus: true, class: "form-control", autocomplete: "firstname" %>
-                </div>
-                <div class="form-label-group">
-                  <%= f.label :Last_name %><br />
-                  <%= f.text_field :lastname, autofocus: true, class: "form-control", autocomplete: "lastname" %>
-                </div>
                 <div class="form-label-group">
                   <%= f.label :Email_Address %><br />
                   <%= f.email_field :email, autofocus: true, class: "form-control", autocomplete: "email" %>
@@ -25,11 +17,7 @@
                   <% end %><br />
                   <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
                 </div>
-                <div class="form-label-group">
-                  <%= f.label :password_confirmation %><br />
-                  <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
-                </div>
-                <%= f.submit "Create", class: "btn mt-3 btn-lg btn-primary btn-block text-uppercase"  %>
+                <%= f.submit "Log in", class: "btn mt-3 btn-md btn-primary btn-block text-uppercase"  %>
                 <hr class="my-4">
               </form>
             </div>

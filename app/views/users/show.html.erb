@@ -1,39 +1,43 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Firstname:</strong>
-  <%= @user.firstname %>
-</p>
-
-<p>
-  <strong>Lastname:</strong>
-  <%= @user.lastname %>
-</p>
-
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Business name:</strong>
-  <%= @user.business_name %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>Is admin:</strong>
-  <%= @user.is_admin %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="container">
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                </li>
+            </ul>
+            <div class="tab-content py-4">
+                <div class="tab-pane active" id="profile">
+                    <div class="row">
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col"> <h6>First Name</h6></div>
+                            <div class="col"><span class="text-secondary"><%= @user.first_name %></span></div>
+                          </div>
+                          <div class="row">
+                            <div class="col"> <h6>Last Name</h6></div>
+                            <div class="col"><span class="text-secondary"><%= @user.last_name %></span></div>
+                          </div>
+                          <div class="row">
+                            <div class="col"> <h6>Email</h6></div>
+                            <div class="col"><span class="text-secondary"><%= @user.email %></span></div>
+                          </div>
+                          <div class="row">
+                            <div class="col"> <h6>Role</h6></div>
+                            <div class="col"><span class="text-secondary"> <%= @user.is_admin ? "Admin" : "Regular" %></span></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 order-lg-1 text-center">
+            <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            <h6 class="mt-2">Upload a different photo</h6>
+            <label class="custom-file">
+                <input type="file" id="file" class="custom-file-input">
+                <span class="custom-file-control">Choose file</span>
+            </label>
+        </div>
+    </div>
+</div>
