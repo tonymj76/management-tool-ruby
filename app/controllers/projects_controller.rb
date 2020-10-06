@@ -14,14 +14,14 @@ class ProjectsController < ApplicationController
             format.html { redirect_to @project, success: 'Project was successfully created.' }
             format.json { render :show, status: :created, location: @project }
           else
-            format.html { render :new }
+            format.html { render :new, danger: 'Error creating project' }
             format.json { render json: @project.errors, status: :unprocessable_entity }
           end
         end
     end
 
     def new
-        @project = Project.new
+        @project = current_user.projects.build
     end
 
     def edit
@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
     def update 
         respond_to do |format|
             if @project.update(project_params)
-              format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+              format.html { redirect_to @project, success: 'Project was successfully updated.' }
               format.json { render :show, status: :ok, location: @project }
             else
               format.html { render :edit }
@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
     def destroy 
         @project.destroy
         respond_to do |format|
-          format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
+          format.html { redirect_to projects_url, success: 'Project was successfully destroyed.' }
           format.json { head :no_content }
         end 
     end
