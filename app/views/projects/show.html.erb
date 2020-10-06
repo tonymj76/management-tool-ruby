@@ -1,5 +1,5 @@
 <%= link_to 'Back', projects_path, class: 'btn btn-light mb-3' %>
-<div class="card">
+<div class="card mb-5">
   <div class="card-body">
     <h2 class="card-title d-flex justify-content-between">
       <span><%= @project.name %></span>
@@ -40,7 +40,7 @@
             <div class="card-body">
             <div class="d-flex justify-content-between">
               <div class="task-status">
-                <i class="fas fa-grip-vertical grip text-secondary mr-2"></i>
+                <i class="fas fa-grip-vertical grip text-secondary mr-2 handle"></i>
                 <span class="badge badge-<%= task.color_class %> mb-3"><%= task.status %></span>
               </div>
               <div>
