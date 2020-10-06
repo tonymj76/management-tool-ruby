@@ -8,11 +8,11 @@
               <form class="form-signin">
                 <div class="form-label-group">
                   <%= f.label :First_name %><br />
-                  <%= f.text_field :firstname, autofocus: true, class: "form-control", autocomplete: "firstname" %>
+                  <%= f.text_field :first_name, autofocus: true, class: "form-control", autocomplete: "firstname" %>
                 </div>
                 <div class="form-label-group">
                   <%= f.label :Last_name %><br />
-                  <%= f.text_field :lastname, autofocus: true, class: "form-control", autocomplete: "lastname" %>
+                  <%= f.text_field :last_name, autofocus: true, class: "form-control", autocomplete: "lastname" %>
                 </div>
                 <div class="form-label-group">
                   <%= f.label :Email_Address %><br />
@@ -29,7 +29,7 @@
                   <%= f.label :password_confirmation %><br />
                   <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
                 </div>
-                <%= f.submit "Create", class: "btn mt-3 btn-lg btn-primary btn-block text-uppercase"  %>
+                <%= f.submit "Update", class: "btn mt-3 btn-md btn-primary btn-block text-uppercase"  %>
                 <hr class="my-4">
               </form>
             </div>
