@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
-
-    add_flash_types :warning, :success, :info, :danger
-
+    add_flash_types :info, :danger, :warning, :success
+  
     include SessionsHelper
     include ApplicationHelper
 
