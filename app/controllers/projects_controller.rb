@@ -3,15 +3,15 @@ class ProjectsController < ApplicationController
     before_action :set_project, only: [:show, :edit, :update, :destroy]
 
     def index
-        @projects = Project.all
+        @projects = current_user.projects
     end
 
     def create
-        @project = Project.new(project_params)
+        @project = current_user.projects.build(project_params)
 
         respond_to do |format|
           if @project.save
-            format.html { redirect_to @project, notice: 'Project was successfully created.' }
+            format.html { redirect_to @project, success: 'Project was successfully created.' }
             format.json { render :show, status: :created, location: @project }
           else
             format.html { render :new }
@@ -54,7 +54,7 @@ class ProjectsController < ApplicationController
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-        @project = Project.find(params[:id])
+        @project = current_user.projects.find(params[:id])
     end
     # Only allow a list of trusted parameters through.
     def project_params

@@ -7,8 +7,8 @@ class SessionsController < ApplicationController
   
     def login
       if !logged_in?
-        user = User.find_by(email: params[:user][:email].downcase)
-        if user && user.authenticate(params[:user][:password])
+        user = User.find_by(email: params[:email].downcase)
+        if user && user.authenticate(params[:password])
           log_in user
           redirect_back_or user
         else
