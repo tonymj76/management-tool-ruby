@@ -9,6 +9,8 @@ require("@rails/activestorage").start()
 require("channels")
 
 import "bootstrap"
+import Sortable from 'sortablejs';
+
 document.addEventListener("turbolinks:load", () => {
     $('[data-toggle="tooltip"]').tooltip()
     $('[data-toggle="popover"]').popover()
@@ -21,3 +23,11 @@ import "../stylesheets/application"
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+document.addEventListener('turbolinks:load', () => {
+  var el = document.getElementById("tasks-list")
+  var sortable = Sortable.create(el, {
+    animation: 150,
+    handle: '.handle',
+    // ghostClass: 'bg-info',
+  })
+})
