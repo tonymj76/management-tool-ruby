@@ -5,7 +5,7 @@
       <%= link_to 'New Project', new_project_path, class:"btn btn-primary" %>
     </h2>
 
-    <% @projects.each do |project| %>
+    <% @projects && @projects.each do |project| %>
       <%= link_to project, class: 'text-decoration-none' do %>
         <div class="card project-card mb-3">
           <div class="card-body">

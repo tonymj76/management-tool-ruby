@@ -3,12 +3,15 @@ class ProjectsController < ApplicationController
     before_action :set_project, only: [:show, :edit, :update, :destroy]
 
     def index
+      if !logged_in? 
+         redirect_to user_session_path
+      else
         @projects = current_user.projects
+      end
     end
-
+  
     def create
         @project = current_user.projects.build(project_params)
-
         respond_to do |format|
           if @project.save
             format.html { redirect_to @project, success: 'Project was successfully created.' }
