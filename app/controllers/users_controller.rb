@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   before_action :set_project, only: [:project_show, :project_edit, :project_update, :project_destroy]
   before_action :set_task_project, only: [:task_show, :task_edit, :task_destroy, :task_update, :task_create]
   before_action :set_task, only: [:task_show, :task_edit, :task_update, :task_destroy]
+
   # GET /users
   # GET /users.json
   def index
@@ -125,7 +126,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, info: 'User was successfully updated.' }
+        current_user && !current_user.is_admin ? format.html { redirect_to @user, info: 'User was successfully updated.' } : format.html { redirect_to users_index_path, info: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
