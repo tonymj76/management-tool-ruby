@@ -1,4 +1,5 @@
-<div class="card bg-grey">
+<div class="container">
+  <div class="card bg-grey">
   <div class="card-body">
     <h2 class='card-title d-flex justify-content-between mb-4'>
       <span>User List</span>
@@ -24,22 +25,23 @@
             <td><%= user.email %></td>
             <td><%= user.is_admin ? 'Admin' : 'Regular' %></td>
             <td>
-            <%= link_to user_path(user), class: 'btn btn-info btn-sm' do %>
-              <i class='far fa-eye'></i>
-            <% end %>
-            <%= link_to edit_user_path(user), class: 'btn btn-success btn-sm' do %>
-              <i class='far fa-edit'></i>
-            <% end %>
-            <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm' do %>
-              <i class='fas fa-trash'></i>
-            <% end%>
+              <%= link_to user_path(user), class: 'btn btn-info btn-sm', title: 'View' do %>
+                <i class='far fa-eye'></i>
+              <% end %>
+              <%= link_to edit_user_path(user), class: 'btn btn-success btn-sm', title: 'Edit' do %>
+                <i class='far fa-edit'></i>
+              <% end %>
+              <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
+                <i class='fas fa-trash'></i>
+              <% end%>
+              <%= link_to projects_path(:current_user => user) , class: 'btn btn-info btn-sm', title: 'Projects' do %>
+                <i class='fas fa-tasks'></i>
+              <% end%>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
+  </div>  
 </div>
-<br>
-
-<%#= link_to 'New User', new_user_path %>

@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:show]
-
+  before_action :is_admin, only: [:show]
   # GET /users
   # GET /users.json
   def index
+    redirect_to root_url, warning: "You are not authorized" unless current_user && is_admin?
     @users = User.all
   end
 
@@ -27,10 +28,17 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:success] = "Welcome to Awesome Project Manager"
-      redirect_to @user
+      if !current_user || !current_user.is_admin
+        log_in @user
+        flash[:success] = "Welcome to Awesome Project Manager"
+        redirect_to root_url
+      else
+        log_in @user
+        flash[:success] = "User created Successfully"
+        redirect_to users_index_path
+      end
     else
+     flash.now[:danger] = "Error Creating User Account"
      render :new
     end
   end
@@ -40,7 +48,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, info: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -54,7 +62,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url, info: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
