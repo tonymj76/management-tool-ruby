@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:show]
-  before_action :is_admin, only: [:show]
+  before_action :is_admin?, only: [:show]
   # GET /users
   # GET /users.json
   def index
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, info: 'User was successfully updated.' }
+        current_user && !current_user.is_admin ? format.html { redirect_to @user, info: 'User was successfully updated.' } : format.html { redirect_to users_index_path, info: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
