@@ -1,0 +1,10 @@
+<%= link_to 'Back', users_path, class: 'btn btn-secondary mb-3' %>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">
+      <span>New Projects</span>
+    </h2>
+    <%= render 'users/projects/form', project: @project, mode: 'new' %>
+</div>
+
+

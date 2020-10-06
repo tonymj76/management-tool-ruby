@@ -1,14 +1,87 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:show]
-  before_action :is_admin?, only: [:show]
+  before_action :is_admin?, only: [:show, :task_show, :task_edit, :task_update, :task_destroy, :project_new, :project_create, :project_show, :project_edit, :project_update, :project_destroy]
+  before_action :set_project, only: [:project_show, :project_edit, :project_update, :project_destroy]
+  before_action :set_task_project, only: [:task_show, :task_edit, :task_destroy, :task_update, :task_create]
+  before_action :set_task, only: [:task_show, :task_edit, :task_update, :task_destroy]
+
   # GET /users
   # GET /users.json
   def index
     redirect_to root_url, warning: "You are not authorized" unless current_user && is_admin?
+    @projects = current_user.projects
     @users = User.all
   end
+  
+  def project_update
+    respond_to do |format|
+      if @project.update(project_params)
+        format.html { redirect_to admin_project_url(@project), success: 'Project was successfully updated.' }
+        format.json { render 'users/projects/show', status: :ok, location: @project }
+      else
+        format.html { render 'users/projects/edit' }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
+  def project_destroy
+    @project.destroy
+    respond_to do |format|
+      format.html { redirect_to users_url, success: 'Project was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def project_edit
+    render 'users/projects/edit'
+  end
+
+  def project_new
+    @project = current_user.projects.build
+    render 'users/projects/new'
+  end
+
+  def project_show
+    @task = @project.tasks.build
+    render 'users/projects/show'
+  end
+
+  def project_create
+    @project = current_user.projects.build(project_params)
+    respond_to do |format|
+      if @project.save
+        format.html { redirect_to admin_project_url(@project) , success: 'Project was successfully created.' }
+        format.json { render 'users/projects/show', status: :created, location: @project }
+      else
+        format.html { render 'users/projects/new', danger: 'Error creating project' }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def task_create
+    @task = @task_project.tasks.build(task_params)
+
+    if @task.save
+      redirect_to(admin_project_url(@task.project))
+    else
+      render action: 'task_new'
+    end
+  end
+
+  def task_update
+    if @task.update_attributes(task_params)
+      redirect_to(admin_project_url(@task.project))
+    else
+      render action: 'task_edit'
+    end
+  end
+
+  def task_edit
+    render 'users/tasks/edit'
+  end
   # GET /users/1
   # GET /users/1.json
   def show
@@ -23,6 +96,11 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def task_destroy
+    @task.destroy
+
+    redirect_to admin_project_url(@task.project)
+  end
   # POST /users
   # POST /users.json
   def create
@@ -69,12 +147,35 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_task_project
+      @task_project = Project.find(params[:project_id])
+    end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_project
+        @project = current_user.projects.find(params[:id])
+    end
+    # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_task
+      @task = @task_project.tasks.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :password, :is_admin)
+    end
+
+    # Only allow a list of trusted parameters through.
+    def project_params
+      params.require(:project).permit(:name, :description)
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def task_params
+      params.require(:task).permit(:name, :description, :status, :project_id)
     end
 end
