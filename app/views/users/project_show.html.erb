@@ -1,0 +1,40 @@
+<%= link_to 'Back', user_projects_path(@user), class: 'btn btn-light mb-3' %>
+<div class="card mb-5">
+  <div class="card-body">
+    <h2 class="card-title d-flex justify-content-between">
+      <span>Project: <%= @project.name %></span>
+      <div>
+      <span>User: <%= @user.first_name %></span>
+        <%#= link_to 'Edit', edit_project_path(@project), class: "btn btn-light" %>
+        <%#= link_to 'Destroy', @project, method: :delete, class: "btn btn-secondary", data: { confirm: 'Are you sure?' } %>      
+      </div>
+    </h2>
+    <hr>
+    <h4 class="mt-5">All Tasks</h4>
+    <ul id="tasks-list">
+      <% @project.tasks.each do |task| %>
+        <% if task.persisted? %>
+        <li>
+          <div class="card mb-3">
+            <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div class="task-status">
+                <i class="fas fa-grip-vertical grip text-secondary mr-2 handle"></i>
+                <span class="badge badge-<%= task.color_class %> mb-3"><%= task.status %></span>
+              </div>
+            </div>
+              <h5 class="card-title mb-2">
+                <span>
+                <%= task.name %>
+                </span>
+              </h5>
+              <p><%= task.description %></p>
+            </div>
+          </div>
+        </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+

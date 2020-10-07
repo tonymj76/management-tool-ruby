@@ -1,3 +1,17 @@
+<div class="container">
+  <% 
+    if current_user &&  current_user.is_admin
+  %>
+      <%= link_to 'Back', users_index_path, class: 'btn btn-secondary btn-light mb-3' %>
+  <%
+    else
+  %>
+      <%= link_to 'Back', projects_url, class: 'btn btn-secondary btn-light mb-3' %>
+  <%
+    end
+  %>
+  
+</div>
 <%= form_with(model: @user, local: true) do |f| %>
     <div class="container">
       <div class="row">
@@ -33,7 +47,9 @@
                   <%= f.label :Is_Admin %><br />
                   <%= f.check_box :is_admin, autocomplete: "is_admin" %>
                 </div>
-                <%= f.submit "Update", class: "btn mt-3 btn-md btn-primary btn-block text-uppercase"  %>
+                <div class="text-center">
+                  <%= f.submit "Update", class: "btn mt-3 btn-md btn-primary text-center"  %>
+                </div>
                 <hr class="my-4">
               </form>
             </div>

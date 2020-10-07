@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title d-flex justify-content-between">
+      <span><%= @user.first_name %>'s Projects</span>
+      <%= link_to 'Back', users_path, class:"btn btn-secondary btn-secondary" %>
+    </h2>
+
+    <% @projects && @projects.each do |project| %>
+      <%= link_to user_project_tasks_path(@user, project), class: 'text-decoration-none' do %>
+        <div class="card project-card mb-3">
+          <div class="card-body">
+          <div class="mb-3">
+            <span class="badge badge-<%= project.badge_color %> mb-3"><%= project.status %></span>
+            <span class="text-secondary">
+              <small>
+                <%= project.percent_complete %>% complete
+                (<%= project.total_complete %>/<%= project.total_tasks %> tasks)
+              </small>
+            </span>
+          </div>
+            <h5 class="card-title text-dark"><b><%= project.name %></b></h5>
+            <p class="text-secondary"><%= project.description %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+</div>
+
