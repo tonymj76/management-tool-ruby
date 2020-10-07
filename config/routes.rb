@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   scope '/admin' do
     get '/users', to: 'users#index', as: 'users_index'
     resources :users
+    get '/users/:id/projects', to: 'users#user_projects', as: 'user_projects'
+    get '/users/:id/projects/:project_id', to: 'users#user_project_tasks', as: 'user_project_tasks'
     scope '/projects' do
       get '/', to: 'users#project_new', as: 'admin_project_new'
       post '/', to: 'users#project_create', as: 'admin_project_create'
