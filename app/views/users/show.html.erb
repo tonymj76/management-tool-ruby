@@ -1,4 +1,18 @@
 <div class="container">
+  <% 
+    if current_user && current_user.is_admin
+  %>
+      <%= link_to 'Back', users_index_path, class: 'btn btn-secondary mb-3' %>
+  <%
+    else
+  %>
+      <%= link_to 'Back', projects, class: 'btn btn-secondary mb-3' %>
+  <%
+    end
+  %>
+  
+</div>
+<div class="container">
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
             <ul class="nav nav-tabs">
