@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :user_projects, :user_project_tasks]
   before_action :logged_in_user, only: [:show]
   before_action :is_admin?, only: [:show, :task_show, :task_edit, :task_update, :task_destroy, :project_new, :project_create, :project_show, :project_edit, :project_update, :project_destroy]
   before_action :set_project, only: [:project_show, :project_edit, :project_update, :project_destroy]
@@ -12,7 +12,17 @@ class UsersController < ApplicationController
     @projects = current_user.projects
     @users = User.all
   end
-  
+
+  def user_projects
+    @projects = @user.projects
+    render 'users/project_index'
+  end
+
+  def user_project_tasks
+    @project = @user.projects.find(params[:project_id])
+    render 'users/project_show'
+  end
+
   def project_update
     respond_to do |format|
       if @project.update(project_params)

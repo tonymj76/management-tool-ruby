@@ -34,7 +34,7 @@
               <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
                 <i class='fas fa-trash'></i>
               <% end%>
-              <%= link_to projects_path(:current_user => user) , class: 'btn btn-info btn-sm', title: 'Projects' do %>
+              <%= link_to user_projects_path(user) , class: 'btn btn-info btn-sm', title: 'Projects' do %>
                 <i class='fas fa-tasks'></i>
               <% end%>
             </td>
