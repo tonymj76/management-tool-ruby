@@ -135,10 +135,12 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      p user_edit_params
+      if @user.update(user_edit_params)
         current_user && !current_user.is_admin ? format.html { redirect_to @user, info: 'User was successfully updated.' } : format.html { redirect_to users_index_path, info: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
+        Rails.logger.info(@user.errors.inspect) 
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -177,6 +179,10 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :password, :is_admin)
+    end
+
+    def user_edit_params
+      params.require(:user).permit(:first_name, :last_name, :email, :is_admin)
     end
 
     # Only allow a list of trusted parameters through.
