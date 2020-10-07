@@ -1,10 +1,19 @@
+<div class="container">
+  <% 
+    if current_user && current_user.is_admin
+  %>
+      <%= link_to 'Back', users_index_path, class: 'btn btn-secondary mb-3' %>
+  <%
+    end
+  %>
+</div>
 <%= form_with(model: @user, local: true) do |f| %>
     <div class="container">
       <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
           <div class="card card-signin my-5">
             <div class="card-body">
-              <h5 class="card-title text-center">Create Account</h5>
+              <h5 class="card-title text-center">Create New Account</h5>
               <form class="form-signin">
                 <div class="form-label-group">
                   <%= f.label :First_name %><br />
@@ -29,7 +38,9 @@
                   <%= f.label :password_confirmation %><br />
                   <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
                 </div>
-                <%= f.submit "Create", class: "btn mt-3 btn-lg btn-primary btn-block text-uppercase"  %>
+                <div class="text-center">
+                  <%= f.submit "Create", class: "btn mt-3 btn-md btn-primary text-center"  %>
+                </div>
                 <hr class="my-4">
               </form>
             </div>

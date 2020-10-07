@@ -5,6 +5,15 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav ml-auto">
+            <% if current_user && logged_in?%>
+              <% if current_user.is_admin %>
+                 <span class='text-white'>Welcom Admin</span>
+              <% else %>
+                <span class='text-white'>Welcome <%= current_user.first_name %></span>
+              <% end %>
+            <% end %>
+          </div> 
           <% if logged_in? %>
             <div class="navbar-nav ml-auto">
               <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-item nav-link text-white' %>
