@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :user_projects, :user_project_tasks]
   before_action :logged_in_user, only: [:show]
-  before_action :is_admin?, only: [:show, :task_show, :task_edit, :task_update, :task_destroy, :project_new, :project_create, :project_show, :project_edit, :project_update, :project_destroy]
+  before_action :is_admin?, only: [:show, :user_projects, :user_project_tasks, :task_show, :task_edit, :task_update, :task_destroy, :project_new, :project_create, :project_show, :project_edit, :project_update, :project_destroy]
   before_action :set_project, only: [:project_show, :project_edit, :project_update, :project_destroy]
   before_action :set_task_project, only: [:task_show, :task_edit, :task_destroy, :task_update, :task_create]
   before_action :set_task, only: [:task_show, :task_edit, :task_update, :task_destroy]
