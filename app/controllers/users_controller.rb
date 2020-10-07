@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def index
     redirect_to root_url, warning: "You are not authorized" unless current_user && is_admin?
     @projects = current_user.projects
-    @users = User.all
+    @users = User.all.order(:id)
   end
 
   def user_projects
