@@ -135,10 +135,12 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
+      p user_edit_params
       if @user.update(user_edit_params)
         current_user && !current_user.is_admin ? format.html { redirect_to @user, info: 'User was successfully updated.' } : format.html { redirect_to users_index_path, info: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
+        Rails.logger.info(@user.errors.inspect) 
         format.html { render :edit }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
