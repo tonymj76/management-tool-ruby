@@ -48,6 +48,11 @@ class UsersController < ApplicationController
     render 'users/projects/edit'
   end
 
+  def project_all
+    @projects = current_user.projects
+    render 'users/admin_projects'
+  end
+
   def project_new
     @project = current_user.projects.build
     render 'users/projects/new'
@@ -116,14 +121,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      if !current_user || !current_user.is_admin
+      if current_user && current_user.is_admin
+        flash[:success] = "User created Successfully"
+        redirect_to users_index_path
+      else
         log_in @user
         flash[:success] = "Welcome to Awesome Project Manager"
         redirect_to root_url
-      else
-        log_in @user
-        flash[:success] = "User created Successfully"
-        redirect_to users_index_path
       end
     else
      flash.now[:danger] = "Error Creating User Account"

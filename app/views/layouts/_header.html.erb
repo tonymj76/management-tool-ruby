@@ -17,6 +17,9 @@
           <% if logged_in? %>
             <div class="navbar-nav ml-auto">
               <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'nav-item nav-link text-white' %>
+              <% if current_user.is_admin? %>
+                <%= link_to 'My Projects', admin_projects_path, class: 'nav-item nav-link text-white' %>
+              <% end %>
             </div> 
           <% else %>
             <div class="navbar-nav ml-auto">
