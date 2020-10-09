@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-md navbar-light bg-secondary mb-5">
-      <a href="#" class="navbar-brand text-white">Awesome-PM</a>
+<nav class="navbar navbar-expand-md navbar-light sticky-top bg-secondary mb-5">
+      <a href="#" class="navbar-brand text-white"><img src="/images/logo.svg" alt="logo" heigth="40" width="50" class="logo"><img src="/images/Awesome.svg" alt="logo" heigth="250" width="250" class="logo"></a>
       <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -8,9 +8,9 @@
           <div class="navbar-nav ml-auto">
             <% if current_user && logged_in?%>
               <% if current_user.is_admin %>
-                 <span class='text-white'>Welcom Admin</span>
+                 <span class='text-white'>Welcome, Admin</span>
               <% else %>
-                <span class='text-white'>Welcome <%= current_user.first_name %></span>
+                <span class='text-white'>Welcome,  <%= current_user.first_name %></span>
               <% end %>
             <% end %>
           </div> 
