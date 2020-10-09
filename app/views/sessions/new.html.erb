@@ -9,7 +9,7 @@
           <div class="col-md-7">
             <div class="card-body">
               <div class="brand-wrapper">
-                <img src="/images/logo.svg" alt="logo" heigth="50" width="100" class="logo">
+                <img src="/images/logo.svg" alt="logo" heigth="200" width="200" class="logo">
               </div>
               <p class="login-card-description">Sign into your account</p>
               <form>
@@ -24,7 +24,9 @@
                     <% end %><br />
                     <%= f.password_field :password, class: "form-control", autocomplete: "new-password", placeholder: "********" %>
                   </div>
-                  <%= f.submit "Log in", class: "btn mt-3 btn-md btn-primary btn-block text-uppercase"  %>
+                  <div class="text-center">
+                    <%= f.submit "Log in", class: "btn mt-3 btn-md btn-primary text-uppercase"  %>
+                  </div>
                   <hr class="my-4">
                 </form>
                 <p class="login-card-footer-text">Don't have an account?  <%= link_to 'Sign up', new_user_registration_path, class: 'text-decoration-none' %></p>
