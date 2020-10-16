@@ -9,6 +9,7 @@ require("@rails/activestorage").start()
 require("channels")
 
 import "bootstrap"
+import "bootstrap-select"
 import Sortable from 'sortablejs';
 
 document.addEventListener("turbolinks:load", () => {

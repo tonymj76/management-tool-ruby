@@ -8,28 +8,59 @@
         <%= link_to 'Destroy', delete_admin_project_path(@project), method: :delete, class: "btn btn-secondary", data: { confirm: 'Are you sure?' } %>      
       </div>
     </h2>
-    <div class="mb-4">
-      <h6>Add task</h6>
-        <%= form_for(@task, url: new_admin_projects_task_path(@task.project)) do |f| %>
-          <% if @task.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-4">
+          <h6>Add task</h6>
+            <%= form_for(@task, url: new_admin_projects_task_path(@task.project)) do |f| %>
+              <% if @task.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
-              <ul>
-              <% @task.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
+                  <ul>
+                  <% @task.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                  </ul>
+                </div>
               <% end %>
-              </ul>
-            </div>
+              <%= f.hidden_field :status, value: 'not-started' %>
+              <div class="input-group">
+                <%= f.text_field :name, class: 'form-control', placeholder: 'Enter task name' %>
+                <div class="input-group-append">
+                  <%= f.submit class: 'btn btn-primary' %>
+                </div>
+              </div>
+            <% end %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h6>Add Collaborators</h6>
+        <%= form_for @colaborator do |f| %>
+              <%= f.hidden_field :project_id, :value => @project.id %>
+              <% if user_options(@user_id, @project.id).size > 0 %>
+              <div class="input-group">
+                <%= f.select :user_id,  user_options(@user_id, @project.id), {}, class: 'selectpicker form-control', :multiple => true, :data => {"live-search" => "true" } %>
+                <div class="input-group-append">
+                  <%= f.submit 'Add Collaborator(s)', class: 'btn btn-success' %>
+                </div>
+              </div>
+              <% else %>
+                No Available Users to be assigned to this project
+              <% end %>
+              <div class="mt-2"><small>Project Collaborators</small></div>
+              <div class="d-flex">
+              <% @collaborators.each do |colab| %>
+              <%= link_to colab, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <div class="parent mr-2">
+                  <img title="<%= colab.user.first_name %> <%= colab.user.last_name %>" class="avatar init" src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=<%= colab.user.first_name %>+<%= colab.user.last_name %>" height="40px">
+                  <img title="Remove <%= colab.user.first_name %> <%= colab.user.last_name %>" class="avatar cover" src="https://ui-avatars.com/api/?background=ca6048&color=fff&name=x" height="40px">
+                </div>
+                <% end %>
+              <% end %>
+              </div>
           <% end %>
-          <%= f.hidden_field :status, value: 'not-started' %>
-          <div class="input-group">
-            <%= f.text_field :name, class: 'form-control', placeholder: 'Enter task name' %>
-            <div class="input-group-append">
-              <%= f.submit class: 'btn btn-primary' %>
-            </div>
-          </div>
-        <% end %>
+      </div>
     </div>
     <h4>Task</h4>
     <ul id="tasks-list">

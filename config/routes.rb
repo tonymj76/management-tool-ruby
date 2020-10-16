@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :tasks
   end
+  resources :colaborators, only: [:create, :destroy]
 
   scope '/admin' do
     get '/users', to: 'users#index', as: 'users_index'

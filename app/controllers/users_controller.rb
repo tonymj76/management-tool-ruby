@@ -48,6 +48,7 @@ class UsersController < ApplicationController
   end
 
   def project_all
+    @owned_projects = Project.where(user_id: current_user.id)
     @projects = current_user.projects
     render 'users/admin_projects'
   end
@@ -58,8 +59,13 @@ class UsersController < ApplicationController
   end
 
   def project_show
+    @colaborator = Colaborator.new
+    @user_id = current_user.id
+    @collaborators = Colaborator.where(:project_id => @project.id)
     @task = @project.tasks.build
-    render 'users/projects/show'
+    respond_to do |format|
+      format.html {render 'users/projects/show'}
+    end
   end
 
   def project_create
@@ -168,7 +174,7 @@ class UsersController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-        @project = current_user.projects.find(params[:id])
+        @project = Project.find_by(user_id: current_user.id, id: params[:id])
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_user
