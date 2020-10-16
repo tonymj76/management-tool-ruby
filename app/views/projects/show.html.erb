@@ -3,10 +3,10 @@
   <div class="card-body">
     <h2 class="card-title d-flex justify-content-between mb-4">
       <span><%= @project.name %></span>
-      <div>
+      <ul>
         <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-light" %>
         <%= link_to 'Destroy', @project, method: :delete, class: "btn btn-secondary", data: { confirm: 'Are you sure?' } %>      
-      </div>
+      </ul>
     </h2>
     <div class="row">
       <div class="col-md-6">
@@ -16,7 +16,6 @@
               <% if @task.errors.any? %>
                 <div id="error_explanation">
                   <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
                   <ul>
                   <% @task.errors.full_messages.each do |msg| %>
                     <li><%= msg %></li>
@@ -63,6 +62,13 @@
               <% end %>
               </div>
           <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div id="gallery-dev">
+          <%= render 'displayimage' %>
+        </div>
       </div>
     </div>
     <h4>Task</h4>

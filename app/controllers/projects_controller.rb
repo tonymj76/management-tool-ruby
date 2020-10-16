@@ -13,7 +13,6 @@ class ProjectsController < ApplicationController
   
     def create
         @project = current_user.projects.build(project_params)
-        p project_params
         respond_to do |format|
           if @project.save
             format.html { redirect_to @project, success: 'Project was successfully created.' }
@@ -66,6 +65,6 @@ class ProjectsController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def project_params
-        params.require(:project).permit(:name, :description, :user_id)
+        params.require(:project).permit(:name, :description, uploads: [])
     end
 end
