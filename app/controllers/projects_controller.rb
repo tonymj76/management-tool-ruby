@@ -32,8 +32,12 @@ class ProjectsController < ApplicationController
     end
 
     def show
-        @colaborator = Colaborator.new
-        @user_id = current_user.id
+      @colaborator = Colaborator.new
+      @user_id = current_user.id
+        if params[:assoc]
+           @assoc = true
+           @project = Project.find(params[:id])
+        end
         @task = @project.tasks.build
         @collaborators = Colaborator.where(:project_id => @project.id)
     end
@@ -65,6 +69,6 @@ class ProjectsController < ApplicationController
     end
     # Only allow a list of trusted parameters through.
     def project_params
-        params.require(:project).permit(:name, :description, uploads: [])
+        params.require(:project).permit(:name, :description, :user_id, uploads: [])
     end
 end
