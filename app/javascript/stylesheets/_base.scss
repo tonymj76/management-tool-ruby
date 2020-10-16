@@ -12,6 +12,23 @@ body {
     }
 }
 
+.parent {
+    .avatar {
+        border-radius: 50%;
+    }
+    .cover {
+        display: none;
+    }
+    &:hover {
+        .init {
+            display: none;
+        }
+        .cover {
+            display: block;
+        }
+    }
+}
+
 #tasks-list{
     list-style: none;
     padding-left: 0%;

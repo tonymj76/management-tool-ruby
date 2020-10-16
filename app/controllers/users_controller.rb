@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   before_action :set_project, only: [:project_show, :project_edit, :project_update, :project_destroy]
   before_action :set_task_project, only: [:task_show, :task_edit, :task_destroy, :task_update, :task_create]
   before_action :set_task, only: [:task_show, :task_edit, :task_update, :task_destroy]
-
   # GET /users
   # GET /users.json
   def index
@@ -49,6 +48,7 @@ class UsersController < ApplicationController
   end
 
   def project_all
+    @owned_projects = Project.where(user_id: current_user.id)
     @projects = current_user.projects
     render 'users/admin_projects'
   end
@@ -59,8 +59,13 @@ class UsersController < ApplicationController
   end
 
   def project_show
+    @colaborator = Colaborator.new
+    @user_id = current_user.id
+    @collaborators = Colaborator.where(:project_id => @project.id)
     @task = @project.tasks.build
-    render 'users/projects/show'
+    respond_to do |format|
+      format.html {render 'users/projects/show'}
+    end
   end
 
   def project_create
@@ -169,7 +174,7 @@ class UsersController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-        @project = current_user.projects.find(params[:id])
+        @project = Project.find_by(user_id: current_user.id, id: params[:id])
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -191,7 +196,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:name, :description)
+      params.require(:project).permit(:name, :description, :user_id)
     end
 
     # Only allow a trusted parameter "white list" through.

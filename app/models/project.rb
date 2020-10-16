@@ -1,6 +1,8 @@
 class Project < ApplicationRecord
   validates :name, :description, presence: true
+  has_many :colaborators
   belongs_to :user
+  has_many :users, through: :colaborators
   has_many :tasks
 
   def badge_color
