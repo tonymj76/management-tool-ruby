@@ -4,8 +4,10 @@
     <h2 class="card-title d-flex justify-content-between">
       <span><%= @project.name %></span>
       <div>
+      <% if !@assoc %>
         <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-light" %>
-        <%= link_to 'Destroy', @project, method: :delete, class: "btn btn-secondary", data: { confirm: 'Are you sure?' } %>      
+        <%= link_to 'Destroy', @project, method: :delete, class: "btn btn-secondary", data: { confirm: 'Are you sure?' } %> 
+      <% end %>
       </div>
     </h2>
     <div class="row">
@@ -34,6 +36,7 @@
             <% end %>
         </div>
       </div>
+      <% if !@assoc %>
       <div class="col-md-6">
         <h6>Add Collaborators</h6>
         <%= form_for @colaborator do |f| %>
@@ -61,7 +64,19 @@
               </div>
           <% end %>
       </div>
-    </div>
+      <% else %>
+        <div class="col-md-6">
+          <div class="mt-2"><h6>All Project Collaborators</h6></div>
+          <div class="d-flex">
+          <% @collaborators.each do |colab| %>
+            <div class="mr-2">
+              <img title="<%=  colab.user.id != current_user.id ? "#{colab.user.first_name} #{colab.user.last_name}": "Me" %>" class="rounded-circle" src="https://ui-avatars.com/api/?background=<%= colab.user.id != current_user.id ? "0D8ABC": "17A2B8" %>&color=fff&name=<%= colab.user.id != current_user.id ? "#{colab.user.first_name}+#{colab.user.last_name}": "M+E" %>" height="40px">
+            </div>
+          <% end %>
+          </div>
+        </div>
+       <% end %>
+      </div>
     <h4>Task</h4>
     <ul id="tasks-list">
       <% @project.tasks.each do |task| %>
