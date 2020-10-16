@@ -4,7 +4,7 @@
     <h2 class="card-title">
       <span>New Projects</span>
     </h2>
-    <%= render 'users/projects/form', project: @project, mode: 'new' %>
+    <%= render 'users/projects/form', project: @project, mode: 'new', user_id: current_user.id  %>
 </div>
 
 

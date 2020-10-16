@@ -1,5 +1,5 @@
 <%= form_with(model: project, user: current_user, local: true) do |form| %>
-<%= form.hidden_field :user_id, value: current_user %>
+<%= form.hidden_field :user_id, value: user_id %>
   <% if project.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
