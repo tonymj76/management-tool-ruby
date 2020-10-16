@@ -13,7 +13,6 @@ class ProjectsController < ApplicationController
   
     def create
         @project = current_user.projects.build(project_params)
-        p project_params
         respond_to do |format|
           if @project.save
             format.html { redirect_to @project, success: 'Project was successfully created.' }
