@@ -32,7 +32,3 @@ PreCommit:
 
   RuboCop:
     enabled: true
-  
-  PreCommit:
-    Fasterer:
-      enabled: true
