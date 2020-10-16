@@ -155,15 +155,15 @@ $bootstrap-xl: 1200px;
 #gallery {
 
     img {
-        height: 75vw;
+        height: 52vw;
         object-fit: cover;
 
         @media (min-width: $bootstrap-sm) {
-            height: 35vw;
+            height: 12vw;
         }
 
         @media (min-width: $bootstrap-lg) {
-            height: 18vw;
+            height: 10vw;
         }
     }
 }
