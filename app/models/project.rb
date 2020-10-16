@@ -4,6 +4,7 @@ class Project < ApplicationRecord
   belongs_to :user
   has_many :users, through: :colaborators
   has_many :tasks
+  has_many_attached :uploads
 
   def badge_color
     case status
@@ -15,7 +16,7 @@ class Project < ApplicationRecord
       'success'
     end
   end
-
+  
   def status
     return 'not-started' if tasks.none?
     if tasks.all? { |task| task.complete? }
