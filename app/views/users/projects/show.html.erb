@@ -16,7 +16,6 @@
               <% if @task.errors.any? %>
                 <div id="error_explanation">
                   <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
                   <ul>
                   <% @task.errors.full_messages.each do |msg| %>
                     <li><%= msg %></li>
@@ -60,6 +59,13 @@
               <% end %>
               </div>
           <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div col-md-6 class="col-sm-12 col-md-12">
+      <div id="gallery-dev">
+        <%= render 'projects/displayimage' %>
+      </div>
       </div>
     </div>
     <h4>Task</h4>
