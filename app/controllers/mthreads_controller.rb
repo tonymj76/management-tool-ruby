@@ -22,7 +22,7 @@ class MthreadsController < ApplicationController
     end
 
     def show
-        
+        @thread = Mthread.find(params[:thread_id])
     end
     
     def edit

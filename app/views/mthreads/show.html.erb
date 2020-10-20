@@ -1,0 +1,30 @@
+<div class="col-md-8">
+  <div class="d-flex justify-content-between">
+   <h4 class="ml-3 mt-3 text-capitalize"><%= @thread.title %> : Messages</h4>
+   <small></small>
+    <div class="mr-3">
+      <h4 class="ml-3 text-capitalize align-self-end"><%= @thread.title %></h4>
+      <small class="ml-3">Created <%= time_ago_in_words(@thread.created_at) + "ago" if @thread.created_at %> </small>
+    </div>
+  </div>
+   <div class="card mb-3 mr-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between mb-2">
+          <h5 class="card-title mb-2"></h5>
+      </div>
+      <%= form_with(url: mthread_messages_path(mthread_id: @thread.id)) do |f| %>
+        <%= f.hidden_field :mthread_id, value: @thread.id %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.text_area :content, class: "form-control", placeholder: "Add a message" %><br/>
+        <%= button_tag type: 'submit', class: "btn btn-sm btn-success", title: "Add Message" do %>
+          <i class="fas fa-comment"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div style="mr-3">
+      <ul>
+        <%#= render 'messages/message', messages: @thread.messages %>
+      </ul>
+  </div>
+</div>
