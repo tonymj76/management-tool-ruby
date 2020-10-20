@@ -38,8 +38,8 @@ class ProjectsController < ApplicationController
            @assoc = true
            @project = Project.find(params[:id])
         end
-        @thread = @project.mthreads.build
-        @threads = @project.mthreads
+        @thread = @project.m_threads.new
+        @threads = @project.m_threads.order("created_at desc")
         @collaborators = Colaborator.where(:project_id => @project.id)
     end
 

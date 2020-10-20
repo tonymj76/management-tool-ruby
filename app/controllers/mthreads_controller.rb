@@ -23,6 +23,7 @@ class MthreadsController < ApplicationController
 
     def show
         @thread = Mthread.find(params[:thread_id])
+        @messages = @thread.messages.where(:message_id => nil).order("created_at desc")
     end
     
     def edit

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'messages/create'
-  get 'messages/destroy'
   resources :projects do
     resources :tasks
   end
