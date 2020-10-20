@@ -61,8 +61,13 @@ class UsersController < ApplicationController
   def project_show
     @colaborator = Colaborator.new
     @user_id = current_user.id
+    if params[:assoc]
+      @assoc = true
+      @project = Project.find(params[:id])
+    end
+    @thread = @project.mthreads.new
+    @threads = @project.mthreads.order("created_at desc")
     @collaborators = Colaborator.where(:project_id => @project.id)
-    @task = @project.tasks.build
     respond_to do |format|
       format.html {render 'users/projects/show'}
     end
