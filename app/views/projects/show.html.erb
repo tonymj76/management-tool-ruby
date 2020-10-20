@@ -91,7 +91,82 @@
         </div>
       </div>
     </div>
-    
+        <div class="row">
+        <div class="col-md-4">
+            <h4 class="ml-3">Threads</h4>
+            <ul id="tasks-list">
+              <%  @threads.each do |m_thread| %>
+                <% if m_thread.persisted? %>
+                <li class="ml-3" style="overflow-y: smooth-scroll">
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <div class="modal-title">
+                            Edit Thread Title
+                          </div>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <%= form_with(url: mthread_path(thread_id: m_thread.id, project_id: @project.id), remote: true) do |f| %>
+                                <% if @thread.errors.any? %>
+                                  <div id="error_explanation">
+                                    <h5><%= pluralize(@thread.errors.count, "error") %> prohibited this task from being saved:</h5>
+                                    <ul>
+                                    <% @thread.errors.full_messages.each do |msg| %>
+                                      <li><%= msg %></li>
+                                    <% end %>
+                                    </ul>
+                                  </div>
+                                <% end %>
+                                <%= f.hidden_field :project_id, value: @project.id %>
+                                <%= f.hidden_field :user_id, value: current_user.id %>
+                                <div class="input-group">
+                                  <%= f.text_field :title, class: 'form-control', value:  m_thread.title %>
+                                  <div class="input-group-append">
+                                    <%= f.submit "Update", class: 'btn btn-info' %>
+                                  </div>
+                                </div>
+                            <% end %>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between mb-2">
+                         <h5 class="card-title mb-2">
+                          <span>
+                          <%= m_thread.title %>
+                          </span>
+                         </h5>
+                         <div class="d-flex">
+                            <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), class: 'btn btn-sm btn-success mr-2', title: 'View Thread' do %>
+                                <i class="fas fa-eye"></i>
+                            <% end %>
+                            <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), class: 'btn btn-sm btn-info mr-2', title: 'Edit', data: {remote: true, toggle: "modal", target: "#myModal"} do %>
+                                <i class="fas fa-edit"></i>
+                            <% end %>
+                            <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
+                                <i class="fas fa-trash"></i>
+                            <% end %>
+                         </div>
+                      </div>
+                      <small style="font-size: .9rem">Created by: <%= current_user.author(m_thread.user_id) %></small>
+                      <br>
+                      <small><%= time_ago_in_words(m_thread.created_at) %> ago</small>
+                    </div>
+                  </div>
+                </li>
+                <% end %>
+              <% end %>
+            </ul>
+        </div>
+          <%#= render 'm_threads/thread', thread: session[:current_thread] %>
+    </div>
   </div>
 </div>
 

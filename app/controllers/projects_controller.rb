@@ -39,6 +39,7 @@ class ProjectsController < ApplicationController
            @project = Project.find(params[:id])
         end
         @thread = @project.mthreads.build
+        @threads = @project.mthreads
         @collaborators = Colaborator.where(:project_id => @project.id)
     end
 
