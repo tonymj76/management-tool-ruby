@@ -13,9 +13,10 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    # msg = Mthread.find(params[:thread_id])
-    # msg.destroy
-    # redirect_to(request.referrer, success: "Message Deleted")
+    mThread = Mthread.find(params[:thread_id])
+    msg = mThread.messages.find(params[:message_id])
+    msg.destroy
+    redirect_to(request.referrer, success: "Message Deleted")
   end
 
   private

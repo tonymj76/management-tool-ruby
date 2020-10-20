@@ -1,10 +1,10 @@
 class Project < ApplicationRecord
   validates :name, :description, presence: true
-  has_many :colaborators
+  has_many :colaborators, :dependent => :delete_all
   belongs_to :user
   has_many :users, through: :colaborators
-  has_many :mthreads
-  has_many :tasks
+  has_many :mthreads, :dependent => :delete_all
+  has_many :tasks, :dependent => :delete_all
 
   has_many_attached :uploads
 

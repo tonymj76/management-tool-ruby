@@ -35,7 +35,9 @@ class MthreadsController < ApplicationController
     end
     
     def destroy
-        
+        mThread = Mthread.find(params[:thread_id])
+        mThread.destroy
+        redirect_to(request.referrer, success: "Thread Deleted")
     end
 
     private
