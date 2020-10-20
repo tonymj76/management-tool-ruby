@@ -14,7 +14,7 @@
       <div class="col-md-6">
         <div class="mb-4">
           <h6>Add Thread</h6>
-            <%= form_for([@thread.project, @thread]) do |f| %>
+            <%= form_with(url: mthreads_path(@project.id), local: true) do |f| %>
               <% if @thread.errors.any? %>
                 <div id="error_explanation">
                   <h2><%= pluralize(@thread.errors.count, "error") %> prohibited this thread from being saved:</h2>
@@ -26,8 +26,9 @@
                 </div>
               <% end %>
               <%= f.hidden_field :project_id, value: @project.id %>
+              <%= f.hidden_field :user_id, value: current_user.id %>
               <div class="input-group">
-                <%= f.text_field :name, class: 'form-control', placeholder: 'Enter thread title' %>
+                <%= f.text_field :title, class: 'form-control', placeholder: 'Enter thread title' %>
                 <div class="input-group-append">
                   <%= f.submit class: 'btn btn-info' %>
                 </div>
@@ -90,54 +91,7 @@
         </div>
       </div>
     </div>
-    <h4>thread</h4>
-    <ul id="threads-list">
-      <% @project.threads.each do |thread| %>
-        <% if thread.persisted? %>
-        <li>
-          <div class="card mb-3">
-            <div class="card-body">
-            <div class="d-flex justify-content-between">
-              <div class="thread-status">
-                <i class="fas fa-grip-vertical grip text-secondary mr-2 handle"></i>
-                <span class="badge badge-<%= thread.color_class %> mb-3"><%= thread.status %></span>
-              </div>
-              <div>
-                <div class="dropdown float-left">
-                  <button class="btn btn-outline-<%= thread.color_class %> btn-sm mr-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <%= thread.readable_status %>
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <% thread::STATUS_OPTIONS.each do |status| %>
-                      <a class="dropdown-item" href="#" 
-                      data-reflex="click->StatusReflex#change" 
-                      data-id="<%= thread.id %>"
-                      data-status="<%= status[1] %>">
-                        <%= status[0] %>
-                      </a>
-                    <% end %>
-                  </div>
-                </div>
-                <%= link_to edit_project_thread_path(thread.project, thread), class: 'btn btn-light btn-sm' do %>
-                  <i class="far fa-edit"></i>
-                <% end %>
-                <%= link_to [thread.project, thread], method: :delete, class: 'btn btn-secondary btn-sm', data: { confirm: 'Are you sure?' } do %>
-                  <i class="fas fa-trash"></i>
-                <% end %>
-              </div>
-            </div>
-              <h5 class="card-title mb-2">
-                <span>
-                <%= thread.name %>
-                </span>
-              </h5>
-              <p><%= thread.description %></p>
-            </div>
-          </div>
-        </li>
-        <% end %>
-      <% end %>
-    </ul>
+    
   </div>
 </div>
 
