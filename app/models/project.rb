@@ -3,7 +3,9 @@ class Project < ApplicationRecord
   has_many :colaborators
   belongs_to :user
   has_many :users, through: :colaborators
+  has_many :mthreads
   has_many :tasks
+
   has_many_attached :uploads
 
   def badge_color

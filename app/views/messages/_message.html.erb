@@ -1,0 +1,24 @@
+<li>
+  <div class="my-2">
+    <p><%= message.content %></p> -
+    <small><%= current_user.author(message["user_id"]) %> : <%= time_ago_in_words(message["created_at"]) %> ago</small>
+  </div>
+  <div class="mr-3">
+      <%= form_with(url:  mthread_messages_path(:mthread_id => message.mthread_id)) do |f| %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <%= f.hidden_field :mthread_id, value:  message["mthread_id"] %>
+          <%= f.hidden_field :message_id, value: message.id %>
+          <%= f.text_area :content, class: "form-control", placeholder: "Add a Reply" %><br/>
+          <%= button_tag type: 'submit', class: "btn btn-sm btn-warning", title: "Reply Message" do %>
+            <i class="fas fa-reply"></i>
+          <% end %>
+      <% end %>
+  </div>
+    <ul>
+    <% if message.messages %>
+     <% message.messages.each do |message| %>
+         <%= render 'messages/message', message: message %>
+     <% end %>
+    <% end %>
+    </ul>
+</li>
