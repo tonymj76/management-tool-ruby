@@ -1,17 +1,38 @@
+$breakpoint-tablet: 768px;
 body {
     background-color: #D3D3D3;
     font-family: "Karla", sans-serif;
     background-color: #d0d0ce;
     min-height: 100vh;
 }
-
+.head {
+    top: 0;
+    z-index: 10;
+    padding: 15px 25px;
+    background-color: white;
+    box-shadow: 0 0 2px 3px rgba(0, 0, 0, 0.1);
+}
 .project-card{
     transition: background-color 0.5s ease;
     &:hover {
         background-color: #f7f7f7;
     }
 }
+.project{
+    display: flex;
+    flex-direction: row;
+    @media (max-width: 768px ) {
+            flex-direction: column;
+            .scroll {
+                margin-right: 0 !important;
+            }
+    }
+}
 
+.scroll{
+    height: 500px;
+    overflow-y: scroll;
+}
 .parent {
     .avatar {
         border-radius: 50%;
@@ -46,7 +67,7 @@ body {
 
 .brand-wrapper {
     margin-bottom: 19px;
-
+    
     .logo {
         height: 37px;
     }
@@ -57,8 +78,8 @@ body {
     border-radius: 27.5px;
     box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
     overflow: hidden;
-
-
+    
+    
     &-img {
         border-radius: 0;
         position: absolute;
@@ -68,19 +89,19 @@ body {
     }
     .card-body {
         padding: 85px 60px 60px;
-
+        
         @media (max-width: 422px) {
             padding: 35px 24px;
         }
     }
-
+    
     &-description {
         font-size: 25px;
         color: #000;
         font-weight: normal;
         margin-bottom: 23px;
     }
-
+    
     form {
         max-width: 326px;
     }
@@ -98,7 +119,7 @@ body {
             color: #919aa3;
         }
     }
-
+    
     .login-btn {
         padding: 13px 20px 12px;
         background-color: #000;
@@ -108,14 +129,14 @@ body {
         line-height: 20px;
         color: #fff;
         margin-bottom: 24px;
-
+        
         &:hover {
             border: 1px solid #000;
             background-color: transparent;
             color: #000;
         }
     }
-
+    
     .forgot-password-link {
         font-size: 14px;
         color: #919aa3;
@@ -126,12 +147,12 @@ body {
         font-size: 16px;
         color: #0d2366;
         margin-bottom: 60px;
-
+        
         @media (max-width: 767px) {
             margin-bottom: 24px;
         }
     }
-
+    
     &-footer-nav {
         a {
             font-size: 14px;
@@ -153,11 +174,11 @@ $bootstrap-xl: 1200px;
 
 // Crop thumbnail images.
 #gallery {
-
+    
     img {
         height: 52vw;
         object-fit: cover;
-
+        
         @media (min-width: $bootstrap-sm) {
             height: 12vw;
         }
@@ -171,11 +192,11 @@ $bootstrap-xl: 1200px;
 
 // Crop images in lightbox.
 .carousel-item {
-
+    
     img {
         height: 60vw;
         object-fit: cover;
-
+        
         @media (min-width: $bootstrap-sm) {
             height: 350px;
         }
@@ -195,12 +216,12 @@ $bootstrap-xl: 1200px;
     
     #gallery {
         padding: 0 15px;
-    
+        
         img {
             display: block;
             margin: 15px 0;
             border-radius: 300px 30px 300px 300px;
-    
+            
             &:hover {
                 border-radius: 30px 90px 30px 30px;
                 cursor: pointer;
@@ -213,10 +234,10 @@ $bootstrap-xl: 1200px;
             background: none;
             border: none;
         }
-    
+        
         .modal-header {
             border: none;
-    
+            
             button {
                 background: none;
                 border-radius: 100px 100px 0 0;
@@ -225,26 +246,26 @@ $bootstrap-xl: 1200px;
                 position: relative;
                 top: 3px;
                 border: solid 2px white;
-    
+                
                 @media (min-width: $bootstrap-lg) {
                     top: 15px;
                 }
-    
+                
                 &:hover {
                     top: 3px;
                 }
             }
-    
+            
             span {
                 color: white;
             }
         }
-    
+        
         .modal-body {
             padding: 0;
             border: none;
             position: relative;
-    
+            
             &::before,
             &::after {
                 content: '';
@@ -254,18 +275,18 @@ $bootstrap-xl: 1200px;
                 position: absolute;
                 background: white;
                 border-radius: 3px 10px;
-    
+                
                 @media (min-width: $bootstrap-md) {
                     border-radius: 3px 30px;
                     height: 100px;
                     width: 100px;
                 }
             }
-    
+            
             &::before {
                 top: -5px;
                 left: -5px;
-    
+                
                 @media (min-width: $bootstrap-md) {
                     top: -15px;
                     left: -15px;
@@ -276,22 +297,22 @@ $bootstrap-xl: 1200px;
                 bottom: -5px;
                 right: -5px;
                 z-index: -1;
-    
+                
                 @media (min-width: $bootstrap-md) {
                     bottom: -15px;
                     right: -15px;
                 }
             }
         }
-    
+        
         .modal-footer {
             border: none;
             margin-top: 60px;
-    
+            
             @media (min-width: $bootstrap-lg) {
                 margin-top: 40px;
             }
-    
+            
             .btn {
                 margin: auto;
                 border: solid 2px white;
@@ -301,63 +322,63 @@ $bootstrap-xl: 1200px;
                 letter-spacing: 0.1em;
                 font-weight: bold;
                 padding: 0.2em 0.7em;
-    
+                
                 &:hover {
                     background: white;
                     color: black;
                 }
             }
         }
-    
+        
         .carousel-control-prev,
         .carousel-control-next {
             font-size: 2em;
             top: auto;
             opacity: 1;
             bottom: -52px;
-    
+            
             @media (min-width: $bootstrap-md) {
                 top: 0;
                 opacity: 0.5;
                 bottom: 0;
             }
         }
-    
+        
         .carousel-control-next-icon,
         .carousel-control-prev-icon {
             height: 30px;
             width: 30px;
         }
-    
+        
         .carousel-control-prev {
             @media (min-width: $bootstrap-md) {
                 left: -90px;
             }
         }
-    
+        
         .carousel-control-next {
             @media (min-width: $bootstrap-md) {
                 right: -90px;
             }
         }
-    
+        
         .carousel-indicators {
             bottom: -60px;
-    
+            
             @media (min-width: $bootstrap-lg) {
                 bottom: -30px;
             }
-    
+            
             li {
                 height: 30px;
                 border-radius: 100px;
                 background: none;
                 border: solid 2px white;
-    
+                
                 @media (min-width: $bootstrap-lg) {
                     height: 10px;
                 }
-    
+                
                 &:hover {
                     background: white;
                 }
@@ -368,8 +389,9 @@ $bootstrap-xl: 1200px;
             }
         }
     }
-
+    
 }
+
 
 // --- END: custom styling demo --- //
 
@@ -379,15 +401,15 @@ $bootstrap-xl: 1200px;
 
 // /* The switch - the box around the slider */
 // .switch {
-//     position: relative;
-//     display: inline-block;
-//     width: 60px;
-//     height: 34px;
+    //     position: relative;
+    //     display: inline-block;
+    //     width: 60px;
+    //     height: 34px;
 
-//     @media (min-width: $bootstrap-sm) {
-//         margin: 0;
-//     }
-// }
+    //     @media (min-width: $bootstrap-sm) {
+        //         margin: 0;
+        //     }
+        // }
 
 // /* Hide default HTML checkbox */
 // .switch input {
