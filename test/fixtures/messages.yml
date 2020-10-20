@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  m_thread: one
+  user: one
+  message: one
+
+two:
+  content: MyText
+  m_thread: two
+  user: two
+  message: two

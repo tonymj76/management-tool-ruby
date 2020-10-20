@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202011051618191) do
+ActiveRecord::Schema.define(version: 202011551618194) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,28 @@ ActiveRecord::Schema.define(version: 202011051618191) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_colaborators_on_project_id"
     t.index ["user_id"], name: "index_colaborators_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.integer "mthread_id", null: false
+    t.integer "user_id", null: false
+    t.integer "message_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["message_id"], name: "index_messages_on_message_id"
+    t.index ["mthread_id"], name: "index_messages_on_mthread_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "mthreads", force: :cascade do |t|
+    t.string "title"
+    t.integer "user_id", null: false
+    t.integer "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_mthreads_on_project_id"
+    t.index ["user_id"], name: "index_mthreads_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -76,6 +98,11 @@ ActiveRecord::Schema.define(version: 202011051618191) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "colaborators", "projects"
   add_foreign_key "colaborators", "users"
+  add_foreign_key "messages", "messages"
+  add_foreign_key "messages", "mthreads"
+  add_foreign_key "messages", "users"
+  add_foreign_key "mthreads", "projects"
+  add_foreign_key "mthreads", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "tasks", "projects"
 end
