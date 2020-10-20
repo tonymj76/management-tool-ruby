@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     get '/users/:id/projects', to: 'users#user_projects', as: 'user_projects'
     get '/users/:id/projects/:project_id', to: 'users#user_project_tasks', as: 'user_project_tasks'
     scope '/projects' do
+      resources :mthreads do
+        resources :messages, only: [:create, :destroy]
+      end
       get 'all', to: 'users#project_all', as: 'admin_projects'
       get '/', to: 'users#project_new', as: 'admin_project_new'
       post '/', to: 'users#project_create', as: 'admin_project_create'

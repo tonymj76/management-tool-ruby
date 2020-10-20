@@ -15,11 +15,11 @@
         <div class="mb-4">
           <h6>Add Thread</h6>
             <%= form_for([@thread.project, @thread]) do |f| %>
-              <% if @task.errors.any? %>
+              <% if @thread.errors.any? %>
                 <div id="error_explanation">
-                  <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+                  <h2><%= pluralize(@thread.errors.count, "error") %> prohibited this thread from being saved:</h2>
                   <ul>
-                  <% @task.errors.full_messages.each do |msg| %>
+                  <% @thread.errors.full_messages.each do |msg| %>
                     <li><%= msg %></li>
                   <% end %>
                   </ul>
@@ -27,7 +27,7 @@
               <% end %>
               <%= f.hidden_field :project_id, value: @project.id %>
               <div class="input-group">
-                <%= f.text_field :title, class: 'form-control', placeholder: 'Enter thread title' %>
+                <%= f.text_field :name, class: 'form-control', placeholder: 'Enter thread title' %>
                 <div class="input-group-append">
                   <%= f.submit class: 'btn btn-info' %>
                 </div>
@@ -90,48 +90,48 @@
         </div>
       </div>
     </div>
-    <h4>Task</h4>
-    <ul id="tasks-list">
-      <% @project.tasks.each do |task| %>
-        <% if task.persisted? %>
+    <h4>thread</h4>
+    <ul id="threads-list">
+      <% @project.threads.each do |thread| %>
+        <% if thread.persisted? %>
         <li>
           <div class="card mb-3">
             <div class="card-body">
             <div class="d-flex justify-content-between">
-              <div class="task-status">
+              <div class="thread-status">
                 <i class="fas fa-grip-vertical grip text-secondary mr-2 handle"></i>
-                <span class="badge badge-<%= task.color_class %> mb-3"><%= task.status %></span>
+                <span class="badge badge-<%= thread.color_class %> mb-3"><%= thread.status %></span>
               </div>
               <div>
                 <div class="dropdown float-left">
-                  <button class="btn btn-outline-<%= task.color_class %> btn-sm mr-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <%= task.readable_status %>
+                  <button class="btn btn-outline-<%= thread.color_class %> btn-sm mr-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <%= thread.readable_status %>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <% Task::STATUS_OPTIONS.each do |status| %>
+                    <% thread::STATUS_OPTIONS.each do |status| %>
                       <a class="dropdown-item" href="#" 
                       data-reflex="click->StatusReflex#change" 
-                      data-id="<%= task.id %>"
+                      data-id="<%= thread.id %>"
                       data-status="<%= status[1] %>">
                         <%= status[0] %>
                       </a>
                     <% end %>
                   </div>
                 </div>
-                <%= link_to edit_project_task_path(task.project, task), class: 'btn btn-light btn-sm' do %>
+                <%= link_to edit_project_thread_path(thread.project, thread), class: 'btn btn-light btn-sm' do %>
                   <i class="far fa-edit"></i>
                 <% end %>
-                <%= link_to [task.project, task], method: :delete, class: 'btn btn-secondary btn-sm', data: { confirm: 'Are you sure?' } do %>
+                <%= link_to [thread.project, thread], method: :delete, class: 'btn btn-secondary btn-sm', data: { confirm: 'Are you sure?' } do %>
                   <i class="fas fa-trash"></i>
                 <% end %>
               </div>
             </div>
               <h5 class="card-title mb-2">
                 <span>
-                <%= task.name %>
+                <%= thread.name %>
                 </span>
               </h5>
-              <p><%= task.description %></p>
+              <p><%= thread.description %></p>
             </div>
           </div>
         </li>

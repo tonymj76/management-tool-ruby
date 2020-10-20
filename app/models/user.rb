@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password validations: false
   has_many :colaborators
   has_many :projects, through: :colaborators
+  has_many :messages
+  has_many :m_threads
   before_save { self.email = email.downcase }
 
   validates :first_name, presence: true

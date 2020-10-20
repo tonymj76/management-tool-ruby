@@ -196,7 +196,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:name, :description, uploads: [], :user_id)
+      params.require(:project).permit(:name, :description, :user_id, uploads: [])
     end
 
     # Only allow a trusted parameter "white list" through.
