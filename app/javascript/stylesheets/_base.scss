@@ -1,8 +1,7 @@
 $breakpoint-tablet: 768px;
 body {
-    background-color: #D3D3D3;
+    background-color: #f7f7f7;
     font-family: "Karla", sans-serif;
-    background-color: #d0d0ce;
     min-height: 100vh;
 }
 .head {
@@ -390,6 +389,47 @@ $bootstrap-xl: 1200px;
         }
     }
     
+}
+
+//  --- Message Thread CSS ---//
+
+.bg-green {
+    background-color: #D3D3D3;
+}
+
+.no-box-shadow {
+    box-shadow: none
+}
+
+.no-box-shadow:focus {
+    box-shadow: none
+}
+
+.day {
+    font-size: .8rem
+}
+
+.heart {
+    border: 1px soild green !important;
+    border-color: green !important;
+    border-radius: 22px
+}
+
+.heart-icon {
+    color: green
+}
+
+.comment-text {
+    font-size: 15px
+}
+
+.delete {
+    font-size: 13px;
+    cursor: pointer
+}
+
+ul {
+    list-style: none;
 }
 
 
