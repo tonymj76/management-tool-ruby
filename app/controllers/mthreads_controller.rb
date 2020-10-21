@@ -46,7 +46,7 @@ class MthreadsController < ApplicationController
     end
 
     def set_mthread
-        @mthread = @project.mthreads.find(params[:id])
+        @mthread = @project.mthreads.find(params[:thread_id])
     end
 
     # Only allow a trusted parameter "white list" through.

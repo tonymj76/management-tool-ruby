@@ -392,6 +392,47 @@ $bootstrap-xl: 1200px;
     
 }
 
+//  --- Message Thread CSS ---//
+
+body {
+    background: #C8E6C9
+}
+
+.no-box-shadow {
+    box-shadow: none
+}
+
+.no-box-shadow:focus {
+    box-shadow: none
+}
+
+.day {
+    font-size: .8rem
+}
+
+.heart {
+    border: 1px soild green !important;
+    border-color: green !important;
+    border-radius: 22px
+}
+
+.heart-icon {
+    color: green
+}
+
+.comment-text {
+    font-size: 15px
+}
+
+.delete {
+    font-size: 13px;
+    cursor: pointer
+}
+
+ul {
+    list-style: none;
+}
+
 
 // --- END: custom styling demo --- //
 

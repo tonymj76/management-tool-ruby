@@ -17,5 +17,10 @@ class User < ApplicationRecord
     user = User.find(id)
     return user.first_name + " " + user.last_name
   end
+
+  def message_owner(id)
+    user = User.find(id)
+    return "#{user.first_name}+#{user.last_name}"
+  end
   
 end
