@@ -103,6 +103,9 @@
                                 <i class="fas fa-eye"></i>
                             <% end %>
                             <% if m_thread.user_id == current_user.id %>
+                               <%= link_to mthread_edit_path(thread_id: m_thread.id, project_id: @project.id), class: 'btn btn-sm btn-info mr-2', title: 'Edit Thread',"data-toggle" => "modal", "data-target" => "#myModal", remote: true do %>
+                                  <i class="fas fa-edit"></i>
+                              <% end %>
                                <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
                                  <i class="fas fa-trash"></i>
                                <% end %>
