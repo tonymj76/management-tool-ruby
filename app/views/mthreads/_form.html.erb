@@ -1,0 +1,18 @@
+ <%= form_with(url: mthread_update_path(thread_id: @thread.id), local: true) do |f| %>
+    <% if @thread.errors.any? %>
+    <div id="error_explanation">
+        <h2><%= pluralize(@thread.errors.count, "error") %> prohibited this thread from being saved:</h2>
+        <ul>
+        <% @thread.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+        </ul>
+    </div>
+    <% end %>
+    <div class="input-group">
+    <%= f.text_field :title, class: 'form-control', value: @thread.title %>
+    <%= button_tag type: 'submit', class: "btn btn-sm btn-success input-group-append", title: "Update Thread" do %>
+           <span class="mt-1 ml-1">Update <i class="fas fa-check"></i></span>
+        <% end %>
+    </div>
+<% end %>

@@ -1,6 +1,6 @@
 <div class="bg-green pl-3 mb-4 pb-3">
   <div class="d-flex justify-content-between">
-    <h4 class="mt-3 text-capitalize"><%= @thread.title %> : Messages</h4>
+    <h4 class="mt-3 text-capitalize"><%= "#" + @thread.title %> : Messages</h4>
     <div class="mr-3 mt-4">
       <span class="">
         Created by <%= @thread.owner_formatted %>  :
@@ -25,10 +25,9 @@
   </div>
   <div style="mr-3">
       <ul>
-    <% @messages.each do |message| %>
-         <%= render 'messages/message', message: message %>
-    <% end %>
-       
+        <% @messages.each do |message| %>
+            <%= render 'messages/message', message: message %>
+        <% end %>
       </ul>
   </div>
 </div>

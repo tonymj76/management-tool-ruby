@@ -12,6 +12,26 @@ class MessagesController < ApplicationController
     end
   end
 
+  def edit
+    @message = Message.find(params[:message_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def update
+    @message = Message.find(params[:message_id])
+    @message.content = params[:content]
+    if @message.save
+      redirect_to(request.referrer, success: "Edited Successfully")
+    else
+        p @message.errors
+        redirect_to(request.referrer, danger: "Unable to Edit Message")
+    end
+  end
+  
+  
+
   def destroy
     mThread = Mthread.find(params[:mthread_id])
     msg = mThread.messages.find(params[:message_id])
