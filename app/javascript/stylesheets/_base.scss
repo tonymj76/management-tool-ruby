@@ -1,8 +1,7 @@
 $breakpoint-tablet: 768px;
 body {
-    background-color: #D3D3D3;
+    background-color: #f7f7f7;
     font-family: "Karla", sans-serif;
-    background-color: #d0d0ce;
     min-height: 100vh;
 }
 .head {
@@ -394,8 +393,8 @@ $bootstrap-xl: 1200px;
 
 //  --- Message Thread CSS ---//
 
-body {
-    background: #C8E6C9
+.bg-green {
+    background-color: #D3D3D3;
 }
 
 .no-box-shadow {
