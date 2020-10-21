@@ -83,50 +83,53 @@
         </div>
        <% end %>
       </div>
-    <div class="row">
-      <div class="col-md-6 col-sm-12">
-        <div id="gallery-dev">
-          <%= render 'displayimage' %>
+      <div class="row">
+      <div class="col-md-4">
+          <h4 class="ml-3">Threads</h4>
+          <ul id="tasks-list">
+            <%  @threads.each do |m_thread| %>
+              <% if m_thread.persisted? %>
+              <li class="ml-3" style="overflow-y: smooth-scroll">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="card-title mb-2">
+                        <span>
+                        <%= m_thread.title %>
+                        </span>
+                        </h5>
+                        <div class="d-flex">
+                          <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), class: 'btn btn-sm btn-success mr-2', title: 'View Thread' do %>
+                              <i class="fas fa-eye"></i>
+                          <% end %>
+                            <% if m_thread.user_id == current_user.id %>
+                              <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
+                                <i class="fas fa-trash"></i>
+                              <% end %>
+                          <% end %>
+                        </div>
+                    </div>
+                    <small style="font-size: .9rem">Created by: <%= current_user.author(m_thread.user_id) %></small>
+                    <br>
+                    <small><%= time_ago_in_words(m_thread.created_at) %> ago</small>
+                  </div>
+                </div>
+              </li>
+              <% end %>
+            <% end %>
+          </ul>
+      </div>
+      <div class="col-md-8">
+        <h4 class="ml-3">Attachments</h4>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <div id="gallery-dev">
+              <%= render 'displayimage' %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-        <div class="row">
-        <div class="col-md-4">
-            <h4 class="ml-3">Threads</h4>
-            <ul id="tasks-list">
-              <%  @threads.each do |m_thread| %>
-                <% if m_thread.persisted? %>
-                <li class="ml-3" style="overflow-y: smooth-scroll">
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between mb-2">
-                         <h5 class="card-title mb-2">
-                          <span>
-                          <%= m_thread.title %>
-                          </span>
-                         </h5>
-                         <div class="d-flex">
-                            <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), class: 'btn btn-sm btn-success mr-2', title: 'View Thread' do %>
-                                <i class="fas fa-eye"></i>
-                            <% end %>
-                             <% if m_thread.user_id == current_user.id %>
-                               <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
-                                 <i class="fas fa-trash"></i>
-                               <% end %>
-                            <% end %>
-                         </div>
-                      </div>
-                      <small style="font-size: .9rem">Created by: <%= current_user.author(m_thread.user_id) %></small>
-                      <br>
-                      <small><%= time_ago_in_words(m_thread.created_at) %> ago</small>
-                    </div>
-                  </div>
-                </li>
-                <% end %>
-              <% end %>
-            </ul>
-        </div>
-    </div>
-  </div>
+   </div>
 </div>
 

@@ -83,13 +83,6 @@
         </div>
        <% end %>
       </div>
-    <div class="row">
-      <div class="col-md-6 col-sm-12">
-        <div id="gallery-dev">
-          <%= render 'projects/displayimage' %>
-        </div>
-      </div>
-    </div>
         <div class="row">
         <div class="col-md-4">
             <h4 class="ml-3">Threads</h4>
@@ -126,7 +119,16 @@
               <% end %>
             </ul>
         </div>
-          <%#= render 'm_threads/thread', thread: session[:current_thread] %>
+        <div class="col-md-8">
+         <h4 class="ml-3">Attachments</h4>
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div id="gallery-dev">
+                <%= render 'projects/displayimage' %>
+              </div>
+            </div>
+          </div>
+       </div>
     </div>
   </div>
 </div>
