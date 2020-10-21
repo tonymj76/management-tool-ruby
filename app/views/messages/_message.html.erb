@@ -1,5 +1,5 @@
 <li>
-   <div class="p-3 mx-5 bg-white mt-2 rounded">
+   <div class="p-3 mx-5 bg-white mt-3 rounded">
       <div class="d-flex justify-content-between">
           <div class="d-flex flex-row user">
             <img 
@@ -32,7 +32,7 @@
           <p><%= message.content %></p>
       </div>
    </div>
-  <div class="mr-3 mx-5 mt-3">
+  <div class="mr-3 mx-5 mt-1">
       <%= form_with(url:  mthread_messages_path(:mthread_id => message.mthread_id)) do |f| %>
         <div class="d-flex flex-row align-items-center add-comment p-2 bg-white rounded">
             <%= f.hidden_field :user_id, value: current_user.id %>
