@@ -27,11 +27,21 @@ class MthreadsController < ApplicationController
     end
     
     def edit
-        
+        @thread = Mthread.find(params[:thread_id])
+        respond_to do |format|
+          format.js
+        end
     end
     
     def update
-        
+        @thread = Mthread.find(params[:thread_id])
+        @thread.title = params[:title]
+        if @thread.save
+            redirect_to(request.referrer, success: "Thread Edited Successfully")
+        else
+            p @thread.errors
+            redirect_to(request.referrer, danger: "Unable to Edit Thread")
+        end
     end
     
     def destroy
@@ -51,6 +61,6 @@ class MthreadsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def mthread_params
-    params.permit(:title, :user_id, :project_id)
+    params.permit(:title, :user_id, :project_id, :thread_id)
     end
 end

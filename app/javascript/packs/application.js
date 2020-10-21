@@ -11,6 +11,10 @@ require("channels")
 import "bootstrap"
 import "bootstrap-select"
 import Sortable from 'sortablejs';
+var jQuery = require('jquery')
+
+global.$ = global.jquery = jQuery;
+window.$ = window.jquery = jQuery;
 
 document.addEventListener("turbolinks:load", () => {
     $('[data-toggle="tooltip"]').tooltip()
