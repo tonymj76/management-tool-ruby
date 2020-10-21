@@ -17,9 +17,12 @@
               </div>
           </div>
           <div class="d-flex align-items-center px-3">
-             <%= link_to mthread_message_path(mthread_id: message['mthread_id'], message_id: message['id']), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
-                                <i class="fas fa-trash"></i>
-             <% end %>
+              <% if message.user_id == current_user.id %>
+                <%= link_to mthread_message_path(mthread_id: message['mthread_id'], message_id: message['id']), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
+                    <i class="fas fa-trash"></i>
+                <% end %>
+              <% end %>
+           
           </div>
       </div>
       <div class="comment-text text-justify mt-2">
