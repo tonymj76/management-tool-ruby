@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :tasks
   end
+  get '/:id', to: 'projects#show', as: 'project_view'
   resources :colaborators, only: [:create, :destroy]
 
   scope '/admin' do
