@@ -6,7 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
-
+/db/migrate/202011051618191_create_active_storage_tables.active_storage
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal

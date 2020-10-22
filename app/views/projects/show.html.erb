@@ -1,84 +1,138 @@
 <%= link_to 'Back', projects_path, class: 'btn btn-light mb-3' %>
 <div class="card mb-5">
   <div class="card-body">
-    <h2 class="card-title d-flex justify-content-between">
-      <span><%= @project.name %></span>
+    <h2 class="card-title d-flex justify-content-between mb-4">
+      <span class="text-uppercase"><%= @project.name %></span>
       <div>
+      <% if !@assoc %>
         <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-light" %>
-        <%= link_to 'Destroy', @project, method: :delete, class: "btn btn-secondary", data: { confirm: 'Are you sure?' } %>      
+        <%= link_to 'Destroy', @project, method: :delete, class: "btn btn-secondary", data: { confirm: 'Are you sure?' } %> 
+      <% end %>
       </div>
     </h2>
-    <div class="mb-4">
-      <h6>Add task</h6>
-        <%= form_for([@task.project, @task]) do |f| %>
-          <% if @task.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
-              <ul>
-              <% @task.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-4">
+          <h6>Add Thread</h6>
+            <%= form_with(url: mthreads_path(@project.id), local: true) do |f| %>
+              <% if @thread.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@thread.errors.count, "error") %> prohibited this thread from being saved:</h2>
+                  <ul>
+                  <% @thread.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                  </ul>
+                </div>
               <% end %>
-              </ul>
+              <%= f.hidden_field :project_id, value: @project.id %>
+              <%= f.hidden_field :user_id, value: current_user.id %>
+              <div class="input-group">
+                <%= f.text_field :title, class: 'form-control', placeholder: 'Enter thread title' %>
+                <div class="input-group-append">
+                  <%= f.submit class: 'btn btn-info' %>
+                </div>
+              </div>
+            <% end %>
+        </div>
+      </div>
+      <% if !@assoc %>
+        <div class="col-md-3">
+            <h6 class="mt-2">Project Collaborators</h6>
+            <div class="d-flex">
+            <% @collaborators.each do |colab| %>
+            <%= link_to colab, method: :delete, data: { confirm: 'Are you sure?' } do %>
+              <div class="parent mr-2">
+                <img title="<%= colab.user.first_name %> <%= colab.user.last_name %>" class="avatar init" src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=<%= colab.user.first_name %>+<%= colab.user.last_name %>" height="40px">
+                <img title="Remove <%= colab.user.first_name %> <%= colab.user.last_name %>" class="avatar cover" src="https://ui-avatars.com/api/?background=ca6048&color=fff&name=x" height="40px">
+              </div>
+              <% end %>
+            <% end %>
+            </div>
+        </div>
+      <% end %>
+      <% if !@assoc %>
+      <div class="col-md-3">
+        <h6>Add Collaborators</h6>
+        <%= form_for @colaborator do |f| %>
+              <%= f.hidden_field :project_id, :value => @project.id %>
+              <% if user_options(@user_id, @project.id).size > 0 %>
+              <div class="input-group">
+                <%= f.select :user_id,  user_options(@user_id, @project.id), {}, class: 'selectpicker form-control', :multiple => true, :data => {"live-search" => "true" } %>
+                <div class="input-group-append">
+                 <%= button_tag type: 'submit', class: "btn btn-md btn-success" do %>
+                   <i class="fas fa-user-plus"></i>
+                 <% end %>
+                </div>
+              </div>
+              <% else %>
+                No Available Users to be assigned to this project
+              <% end %>
+          <% end %>
+      </div>
+      <% else %>
+        <div class="col-md-6">
+          <div class="mt-2"><h6>All Project Collaborators</h6></div>
+          <div class="d-flex">
+          <% @collaborators.each do |colab| %>
+            <div class="mr-2">
+              <img title="<%=  colab.user.id != current_user.id ? "#{colab.user.first_name} #{colab.user.last_name}": "Me" %>" class="rounded-circle" src="https://ui-avatars.com/api/?background=<%= colab.user.id != current_user.id ? "0D8ABC": "17A2B8" %>&color=fff&name=<%= colab.user.id != current_user.id ? "#{colab.user.first_name}+#{colab.user.last_name}": "M+E" %>" height="40px">
             </div>
           <% end %>
-          <%= f.hidden_field :status, value: 'not-started' %>
-          <div class="input-group">
-            <%= f.text_field :name, class: 'form-control', placeholder: 'Enter task name' %>
-            <div class="input-group-append">
-              <%= f.submit class: 'btn btn-primary' %>
-            </div>
           </div>
-        <% end %>
-    </div>
-    <h4>Task</h4>
-    <ul id="tasks-list">
-      <% @project.tasks.each do |task| %>
-        <% if task.persisted? %>
-        <li>
-          <div class="card mb-3">
-            <div class="card-body">
-            <div class="d-flex justify-content-between">
-              <div class="task-status">
-                <i class="fas fa-grip-vertical grip text-secondary mr-2 handle"></i>
-                <span class="badge badge-<%= task.color_class %> mb-3"><%= task.status %></span>
-              </div>
-              <div>
-                <div class="dropdown float-left">
-                  <button class="btn btn-outline-<%= task.color_class %> btn-sm mr-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <%= task.readable_status %>
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <% Task::STATUS_OPTIONS.each do |status| %>
-                      <a class="dropdown-item" href="#" 
-                      data-reflex="click->StatusReflex#change" 
-                      data-id="<%= task.id %>"
-                      data-status="<%= status[1] %>">
-                        <%= status[0] %>
-                      </a>
-                    <% end %>
+        </div>
+       <% end %>
+      </div>
+      <div class="row">
+      <div class="col-md-4">
+          <h4 class="ml-3">Threads</h4>
+          <ul id="tasks-list">
+            <%  @threads.each do |m_thread| %>
+              <% if m_thread.persisted? %>
+              <li class="ml-3" style="overflow-y: smooth-scroll">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="card-title mb-2">
+                        <span>
+                        <%= m_thread.title %>
+                        </span>
+                        </h5>
+                        <div class="d-flex">
+                          <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), class: 'btn btn-sm btn-success mr-2', title: 'View Thread' do %>
+                              <i class="fas fa-eye"></i>
+                          <% end %>
+                            <% if m_thread.user_id == current_user.id %>
+                              <%= link_to mthread_edit_path(thread_id: m_thread.id, project_id: @project.id), class: 'btn btn-sm btn-info mr-2', title: 'Edit Thread',"data-toggle" => "modal", "data-target" => "#myModal", remote: true do %>
+                                  <i class="fas fa-edit"></i>
+                              <% end %>
+                              <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
+                                <i class="fas fa-trash"></i>
+                              <% end %>
+                          <% end %>
+                        </div>
+                    </div>
+                    <small style="font-size: .9rem">Created by: <%= current_user.author(m_thread.user_id) %></small>
+                    <br>
+                    <small><%= time_ago_in_words(m_thread.created_at) %> ago</small>
                   </div>
                 </div>
-                <%= link_to edit_project_task_path(task.project, task), class: 'btn btn-light btn-sm' do %>
-                  <i class="far fa-edit"></i>
-                <% end %>
-                <%= link_to [task.project, task], method: :delete, class: 'btn btn-secondary btn-sm', data: { confirm: 'Are you sure?' } do %>
-                  <i class="fas fa-trash"></i>
-                <% end %>
-              </div>
-            </div>
-              <h5 class="card-title mb-2">
-                <span>
-                <%= task.name %>
-                </span>
-              </h5>
-              <p><%= task.description %></p>
+              </li>
+              <% end %>
+            <% end %>
+          </ul>
+      </div>
+      <div class="col-md-8">
+        <h4 class="ml-3">Attachments</h4>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <div id="gallery-dev">
+              <%= render 'displayimage' %>
             </div>
           </div>
-        </li>
-        <% end %>
-      <% end %>
-    </ul>
-  </div>
+        </div>
+      </div>
+    </div>
+   </div>
 </div>
 

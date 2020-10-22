@@ -1,0 +1,11 @@
+<%= form_with(url:  mthread_message_update_path(:mthread_id => message.mthread_id)) do |f| %>
+    <div class="d-flex flex-row align-items-center add-comment p-2 bg-white rounded">
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.hidden_field :mthread_id, value:  message["mthread_id"] %>
+        <%= f.hidden_field :message_id, value: message.id %>
+        <%= f.text_field :content, class: "form-control border-0 no-box-shadow ml-1", value: message.content %><br/>
+        <%= button_tag type: 'submit', class: "btn btn-sm btn-success", title: "Update Message" do %>
+              <span class="mt-1">update <i class="fas fa-check-circle"></i></span>
+        <% end %>
+    </div>
+<% end %>

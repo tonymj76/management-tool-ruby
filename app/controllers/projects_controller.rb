@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
       if !logged_in? 
          redirect_to user_session_path
       else
+        @owned_projects = Project.where(user_id: current_user.id)
         @projects = current_user.projects
       end
     end
@@ -31,7 +32,15 @@ class ProjectsController < ApplicationController
     end
 
     def show
-        @task = @project.tasks.build
+      @colaborator = Colaborator.new
+      @user_id = current_user.id
+        if params[:assoc]
+           @assoc = true
+           @project = Project.find(params[:id])
+        end
+        @thread = @project.mthreads.new
+        @threads = @project.mthreads.order("created_at desc")
+        @collaborators = Colaborator.where(:project_id => @project.id)
     end
 
     def update 
@@ -57,10 +66,10 @@ class ProjectsController < ApplicationController
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-        @project = current_user.projects.find(params[:id])
+        @project = Project.find_by(user_id: current_user.id, id: params[:id])
     end
     # Only allow a list of trusted parameters through.
     def project_params
-        params.require(:project).permit(:name, :description)
+        params.require(:project).permit(:name, :description, :user_id, uploads: [])
     end
 end

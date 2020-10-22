@@ -10,7 +10,59 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202011051618189) do
+ActiveRecord::Schema.define(version: 202011551618194) do
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "colaborators", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_colaborators_on_project_id"
+    t.index ["user_id"], name: "index_colaborators_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.integer "mthread_id", null: false
+    t.integer "user_id", null: false
+    t.integer "message_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["message_id"], name: "index_messages_on_message_id"
+    t.index ["mthread_id"], name: "index_messages_on_mthread_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "mthreads", force: :cascade do |t|
+    t.string "title"
+    t.integer "user_id", null: false
+    t.integer "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_mthreads_on_project_id"
+    t.index ["user_id"], name: "index_mthreads_on_user_id"
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
@@ -43,6 +95,14 @@ ActiveRecord::Schema.define(version: 202011051618189) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "colaborators", "projects"
+  add_foreign_key "colaborators", "users"
+  add_foreign_key "messages", "messages"
+  add_foreign_key "messages", "mthreads"
+  add_foreign_key "messages", "users"
+  add_foreign_key "mthreads", "projects"
+  add_foreign_key "mthreads", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "tasks", "projects"
 end

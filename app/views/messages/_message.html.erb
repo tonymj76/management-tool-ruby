@@ -1,0 +1,55 @@
+<li>
+   <div class="p-3 mx-5 bg-white mt-3 rounded">
+      <div class="d-flex justify-content-between">
+          <div class="d-flex flex-row user">
+            <img 
+              class="rounded-circle img-fluid img-responsive" 
+              alt="<%= current_user.author(message["user_id"]) %>" 
+              src="https://ui-avatars.com/api/?name=<%= current_user.message_owner(message["user_id"]) %>" width="40"
+              >
+              <div class="d-flex flex-column ml-2">
+                <span class="font-weight-bold">
+                   <%= "@" + current_user.author(message["user_id"]) %>
+                </span>
+                <span class="day">
+                  <%= time_ago_in_words(message["created_at"]) %> ago
+                </span>
+              </div>
+          </div>
+          <div class="d-flex align-items-center px-3">
+              <% if message.user_id == current_user.id %>
+                <%= link_to mthread_message_edit_path(mthread_id: message['mthread_id'], message_id: message['id']), class: 'btn btn-sm btn-info mr-2', title: 'Edit Message', "data-toggle" => "modal", "data-target" => "#myModal", remote: true do %>
+                    <i class="fas fa-edit"></i>
+                <% end %>
+                <%= link_to mthread_message_path(mthread_id: message['mthread_id'], message_id: message['id']), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
+                    <i class="fas fa-trash"></i>
+                <% end %>
+              <% end %>
+           
+          </div>
+      </div>
+      <div class="comment-text text-justify mt-2">
+          <p><%= message.content %></p>
+      </div>
+   </div>
+  <div class="mr-3 mx-5 mt-1">
+      <%= form_with(url:  mthread_messages_path(:mthread_id => message.mthread_id)) do |f| %>
+        <div class="d-flex flex-row align-items-center add-comment p-2 bg-white rounded">
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <%= f.hidden_field :mthread_id, value:  message["mthread_id"] %>
+            <%= f.hidden_field :message_id, value: message.id %>
+            <%= f.text_field :content, class: "form-control border-0 no-box-shadow ml-1", placeholder: "Leave a reply" %><br/>
+            <%= button_tag type: 'submit', class: "btn btn-sm btn-success", title: "Reply Message" do %>
+              <i class="fas fa-reply"></i>
+            <% end %>
+        </div>
+      <% end %>
+  </div>
+    <ul>
+    <% if message.messages %>
+     <% message.messages.order("created_at desc").each do |message| %>
+         <%= render 'messages/message', message: message %>
+     <% end %>
+    <% end %>
+    </ul>
+</li>

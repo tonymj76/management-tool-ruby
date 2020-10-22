@@ -1,30 +1,58 @@
-<div class="card">
-  <div class="card-body">
-    <h2 class="card-title d-flex justify-content-between">
-      <span>Projects</span>
-      <%= link_to 'New Project', new_project_path, class:"btn btn-primary" %>
-    </h2>
+<div class="mb-5 project">
+  <div class="card card flex-grow-1 mr-4 scroll position-relative mb-2">
+      <h2 class="card-title d-flex justify-content-between position-sticky head">
+        <span>My Projects</span>
+        <%= link_to 'New Project', new_project_path, class:"btn btn-primary" %>
+      </h2>
+    <div class="card-body">
 
-    <% @projects && @projects.each do |project| %>
-      <%= link_to project, class: 'text-decoration-none' do %>
-        <div class="card project-card mb-3">
-          <div class="card-body">
-          <div class="mb-3">
-            <span class="badge badge-<%= project.badge_color %> mb-3"><%= project.status %></span>
-            <span class="text-secondary">
-              <small>
-                <%= project.percent_complete %>% complete
-                (<%= project.total_complete %>/<%= project.total_tasks %> tasks)
-              </small>
-            </span>
+      <% @owned_projects && @owned_projects.each do |project| %>
+        <%= link_to project_path(project.id), class: 'text-decoration-none' do %>
+          <div class="card project-card mb-3">
+            <div class="card-body">
+            <div class="mb-3">
+              <span class="badge badge-<%= project.badge_color %> mb-3"><%= project.status %></span>
+              <span class="text-secondary">
+                <small>
+                  <%= project.percent_complete %>% complete
+                  (<%= project.total_complete %>/<%= project.total_tasks %> tasks)
+                </small>
+              </span>
+            </div>
+              <h5 class="card-title text-dark"><b><%= project.name %></b></h5>
+              <p class="text-secondary"><%= project.description %></p>
+            </div>
           </div>
-            <h5 class="card-title text-dark"><b><%= project.name %></b></h5>
-            <p class="text-secondary"><%= project.description %></p>
-          </div>
-        </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
+  <div class="card card flex-grow-1 scroll mb-2 position-relative">
+      <h2 class="card-title d-flex justify-content-between position-sticky head">
+        <span>Associated Projects</span>
+      </h2>
+    <div class="card-body">
 
+      <% @projects && @projects.each do |project| %>
+        <%= link_to project_path(project, assoc: true), class: 'text-decoration-none' do %>
+          <div class="card project-card mb-3">
+            <div class="card-body">
+            <div class="mb-3">
+              <span class="badge badge-<%= project.badge_color %> mb-3"><%= project.status %></span>
+              <span class="text-secondary">
+                <small>
+                  <%= project.percent_complete %>% complete
+                  (<%= project.total_complete %>/<%= project.total_tasks %> tasks)
+                </small>
+              </span>
+            </div>
+              <h5 class="card-title text-dark"><b><%= project.name %></b></h5>
+              <p class="text-secondary"><%= project.description %></p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
 </div>
-

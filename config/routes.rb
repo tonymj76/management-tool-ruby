@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :tasks
   end
+  resources :colaborators, only: [:create, :destroy]
 
   scope '/admin' do
     get '/users', to: 'users#index', as: 'users_index'
@@ -10,6 +11,16 @@ Rails.application.routes.draw do
     get '/users/:id/projects', to: 'users#user_projects', as: 'user_projects'
     get '/users/:id/projects/:project_id', to: 'users#user_project_tasks', as: 'user_project_tasks'
     scope '/projects' do
+      scope '/:project_id' do
+        get '/mthreads/mthread_id', to: 'mthreads#edit', as: 'mthread_edit'
+        post '/mthreads/mthread_id', to: 'mthreads#update', as: 'mthread_update'
+        resources :mthreads, except: [:update] do
+          resources :messages, only: [:create, :destroy]
+          get '/messages/:message_id', to: 'messages#edit', as: 'message_edit'
+          post '/messages/:message_id', to: 'messages#update', as: 'message_update'
+        end
+      end
+      
       get 'all', to: 'users#project_all', as: 'admin_projects'
       get '/', to: 'users#project_new', as: 'admin_project_new'
       post '/', to: 'users#project_create', as: 'admin_project_create'
