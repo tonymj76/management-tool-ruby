@@ -1,4 +1,4 @@
-<%= link_to 'Back', projects_path, class: 'btn btn-light mb-3' %>
+<%= link_to 'Back', projects_path, class: 'btn btn-outline-secondary btn-sm mb-3' %>
 <div class="card mb-5">
   <div class="card-body">
     <h2 class="card-title d-flex justify-content-between mb-4">
@@ -89,7 +89,7 @@
       <div class="col-md-4">
           <h4 class="ml-3">Threads</h4>
           <ul id="tasks-list">
-            <%  @threads.each do |m_thread| %>
+            <% @threads.each do |m_thread| %>
               <% if m_thread.persisted? %>
               <li class="ml-3" style="overflow-y: smooth-scroll">
                 <div class="card mb-3">
