@@ -1,4 +1,4 @@
-<%= link_to 'Back', projects_path, class: 'btn btn-light mb-3' %>
+<%= link_to 'Back', projects_path, class: 'btn btn-outline-secondary btn-sm mb-3' %>
 <div class="card mb-5">
   <div class="card-body">
     <h2 class="card-title d-flex justify-content-between mb-4">
@@ -11,31 +11,33 @@
       </div>
     </h2>
     <div class="row">
-      <div class="col-md-6">
-        <div class="mb-4">
-          <h6>Add Thread</h6>
-            <%= form_with(url: mthreads_path(@project.id), local: true) do |f| %>
-              <% if @thread.errors.any? %>
-                <div id="error_explanation">
-                  <h2><%= pluralize(@thread.errors.count, "error") %> prohibited this thread from being saved:</h2>
-                  <ul>
-                  <% @thread.errors.full_messages.each do |msg| %>
-                    <li><%= msg %></li>
+      <% if !@assoc %>
+           <div class="col-md-6">
+            <div class="mb-4">
+              <h6>Add Thread</h6>
+                <%= form_with(url: mthreads_path(@project.id), local: true) do |f| %>
+                  <% if @thread.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(@thread.errors.count, "error") %> prohibited this thread from being saved:</h2>
+                      <ul>
+                      <% @thread.errors.full_messages.each do |msg| %>
+                        <li><%= msg %></li>
+                      <% end %>
+                      </ul>
+                    </div>
                   <% end %>
-                  </ul>
-                </div>
-              <% end %>
-              <%= f.hidden_field :project_id, value: @project.id %>
-              <%= f.hidden_field :user_id, value: current_user.id %>
-              <div class="input-group">
-                <%= f.text_field :title, class: 'form-control', placeholder: 'Enter thread title' %>
-                <div class="input-group-append">
-                  <%= f.submit class: 'btn btn-info' %>
-                </div>
-              </div>
-            <% end %>
-        </div>
-      </div>
+                  <%= f.hidden_field :project_id, value: @project.id %>
+                  <%= f.hidden_field :user_id, value: current_user.id %>
+                  <div class="input-group">
+                    <%= f.text_field :title, class: 'form-control', placeholder: 'Enter thread title' %>
+                    <div class="input-group-append">
+                      <%= f.submit class: 'btn btn-info' %>
+                    </div>
+                  </div>
+                <% end %>
+            </div>
+          </div>
+      <% end %>
       <% if !@assoc %>
         <div class="col-md-3">
             <h6 class="mt-2">Project Collaborators</h6>
@@ -71,8 +73,8 @@
           <% end %>
       </div>
       <% else %>
-        <div class="col-md-6">
-          <div class="mt-2"><h6>All Project Collaborators</h6></div>
+        <div class="col-md-8 ml-3 mb-2">
+          <div class="mt-2"><h5>All Project Collaborators</h5></div>
           <div class="d-flex">
           <% @collaborators.each do |colab| %>
             <div class="mr-2">
@@ -87,7 +89,7 @@
       <div class="col-md-4">
           <h4 class="ml-3">Threads</h4>
           <ul id="tasks-list">
-            <%  @threads.each do |m_thread| %>
+            <% @threads.each do |m_thread| %>
               <% if m_thread.persisted? %>
               <li class="ml-3" style="overflow-y: smooth-scroll">
                 <div class="card mb-3">
