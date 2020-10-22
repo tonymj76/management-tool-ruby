@@ -34,13 +34,17 @@ class ProjectsController < ApplicationController
     def show
       @colaborator = Colaborator.new
       @user_id = current_user.id
+      @project = Project.find(params[:id])
+      @thread = @project.mthreads.new
         if params[:assoc]
            @assoc = true
-           @project = Project.find(params[:id])
+           @threads = @project.mthreads.order("created_at desc")
+           @collaborators = Colaborator.where(:project_id => @project.id)
+        else
+          @assoc = false
+          @project.present? ? @threads = @project.mthreads.order("created_at desc") : @threads = []
+          @project.present? ? @collaborators = Colaborator.where(:project_id => @project.id) : @collaborators = []
         end
-        @thread = @project.mthreads.new
-        @threads = @project.mthreads.order("created_at desc")
-        @collaborators = Colaborator.where(:project_id => @project.id)
     end
 
     def update 

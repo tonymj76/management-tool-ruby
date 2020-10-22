@@ -47,9 +47,9 @@
   </div>
     <ul>
     <% if message.messages %>
-     <% message.messages.order("created_at desc").each do |message| %>
-         <%= render 'messages/message', message: message %>
-     <% end %>
+      <% message.messages.order("created_at desc").each do |message| %>
+          <%= render 'messages/message', message: message %>
+      <% end %>
     <% end %>
     </ul>
 </li>
