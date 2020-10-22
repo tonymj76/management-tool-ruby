@@ -13,10 +13,6 @@ default: &default
 development:
   <<: sqlite3
   database: db/development.sqlite3
-  
-# development:
-#   <<: *default
-#   database: db/development.sqlite3
 
 # development:
 #   adapter: postgresql
