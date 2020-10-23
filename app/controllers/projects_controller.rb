@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
     before_action :set_project, only: [:show, :edit, :update, :destroy]
 
     def index
-      if !logged_in? 
+      if !logged_in?
          redirect_to user_session_path
       else
         @owned_projects = Project.where(user_id: current_user.id)
