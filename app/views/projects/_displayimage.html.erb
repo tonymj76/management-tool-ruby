@@ -32,17 +32,20 @@ This part is straight out of Bootstrap docs. Just a carousel inside a modal.
         <div id="carouselExample" class="carousel slide" data-ride="carousel">
         
           <ol class="carousel-indicators">
-            <% @project.uploads.each do |upload| %>
-              <li data-target="#carouselExample" data-slide-to="<%=@project.uploads.find_index(upload) %>" class="active"></li>
+            <% @project.uploads.each_with_index do |upload, i| %>
+              <li data-target="#carouselExample" data-slide-to="<%=i%>" class="active"></li>
             <% end %>
           </ol>
 
           <div class="carousel-inner">
-            <% @project.uploads.each do |upload| %>
               <div class="carousel-item active">
-                <%= image_tag upload, class: "d-block w-100" %>
-              </div>
+            <% @project.uploads.each do |upload| %>
+                <%= link_to image_tag(upload), upload, class: "d-block w-100" %>
+                <%#= link_to upload.purge,class: 'btn btn-dark btn-sm', title: 'Delete' do %>
+                <i class="fas fa-trash"></i>
+                <%# end %>
             <% end %>
+              </div>
           </div>
 
           <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
