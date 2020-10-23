@@ -41,6 +41,9 @@ This part is straight out of Bootstrap docs. Just a carousel inside a modal.
               <div class="carousel-item active">
             <% @project.uploads.each do |upload| %>
                 <%= link_to image_tag(upload), upload, class: "d-block w-100" %>
+                <%#= link_to upload.purge,class: 'btn btn-dark btn-sm', title: 'Delete' do %>
+                <i class="fas fa-trash"></i>
+                <%# end %>
             <% end %>
               </div>
           </div>
