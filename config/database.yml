@@ -11,7 +11,7 @@ default: &default
   timeout: 5000
 
 development:
-  <<: sqlite3
+  adapter: sqlite3
   database: db/development.sqlite3
 
 # development:
