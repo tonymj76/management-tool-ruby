@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
 
     def show
       @colaborator = Colaborator.new
-      @user_id = current_user.id
+      @user_id = current_user.id if current_user.present?
       @project = Project.find(params[:id])
       @thread = @project.mthreads.new
         if params[:assoc]
@@ -70,7 +70,7 @@ class ProjectsController < ApplicationController
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-        @project = Project.find_by(user_id: current_user.id, id: params[:id])
+        @project = Project.find_by(user_id: current_user.id, id: params[:id]) if current_user.present? && params[:id].present?
     end
     # Only allow a list of trusted parameters through.
     def project_params
