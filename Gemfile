@@ -55,4 +55,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Postgresql DB
-gem 'pg'
+# gem 'pg'
