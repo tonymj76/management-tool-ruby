@@ -2,7 +2,7 @@ class Project < ApplicationRecord
   validates :name, :description, presence: true
   has_many :colaborators, :dependent => :delete_all
   belongs_to :user
-  has_many :users, through: :colaborators
+  has_many :users, through: :colaborators, :dependent => :delete_all
   has_many :mthreads, :dependent => :delete_all
   has_many :tasks, :dependent => :delete_all
 
