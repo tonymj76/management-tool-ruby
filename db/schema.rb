@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202011551618194) do
+ActiveRecord::Schema.define(version: 202011551618196) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 202011551618194) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "col_has_permissions", force: :cascade do |t|
+    t.integer "colaborator_id", null: false
+    t.integer "permission_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["colaborator_id"], name: "index_col_has_permissions_on_colaborator_id"
+    t.index ["permission_id"], name: "index_col_has_permissions_on_permission_id"
   end
 
   create_table "colaborators", force: :cascade do |t|
@@ -62,6 +71,12 @@ ActiveRecord::Schema.define(version: 202011551618194) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_mthreads_on_project_id"
     t.index ["user_id"], name: "index_mthreads_on_user_id"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "projects", force: :cascade do |t|
@@ -96,6 +111,8 @@ ActiveRecord::Schema.define(version: 202011551618194) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "col_has_permissions", "colaborators"
+  add_foreign_key "col_has_permissions", "permissions"
   add_foreign_key "colaborators", "projects"
   add_foreign_key "colaborators", "users"
   add_foreign_key "messages", "messages"

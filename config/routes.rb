@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     get '/users/:id/projects/:project_id', to: 'users#user_project_tasks', as: 'user_project_tasks'
     scope '/projects' do
       scope '/:project_id' do
+        get '/permissions', to: 'permissions#index', as: 'manage_permissions'
+        get '/permissions/edit/id', to: 'permissions#edit', as: 'permissions_edit'
+        post '/permissions', to: 'permissions#update', as: 'permissions_update'
         get '/mthreads/mthread_id', to: 'mthreads#edit', as: 'mthread_edit'
         post '/mthreads/mthread_id', to: 'mthreads#update', as: 'mthread_update'
         resources :mthreads, except: [:update] do
