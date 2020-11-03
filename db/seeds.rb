@@ -10,4 +10,8 @@
 #     { is_admin: true },
 #     { password: 'password' }
 #     ])
-User.create(id: 2, first_name: 'Luke', last_name: 'Lord of the Rings', email: 'admin@admin.com', is_admin: true, password: 'password')
+# User.create(id: 2, first_name: 'Luke', last_name: 'Lord of the Rings', email: 'admin@admin.com', is_admin: true, password: 'password')
+Permission.create(id: 1, name: 'Create')
+Permission.create(id: 2, name: 'Read')
+Permission.create(id: 3, name: 'Update')
+Permission.create(id: 4, name: 'Delete')
