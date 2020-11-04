@@ -57,25 +57,23 @@
             </div>
                <div class="mb-4">
               <h6>Add Task</h6>
-                <%= form_with(url: mthreads_path(@project.id), local: true) do |f| %>
-                  <% if @thread.errors.any? %>
-                    <div id="error_explanation">
-                      <h2><%= pluralize(@thread.errors.count, "error") %> prohibited this thread from being saved:</h2>
-                      <ul>
-                      <% @thread.errors.full_messages.each do |msg| %>
+                <%= form_for([@task.project, @task]) do |f| %>
+                  <% if @task.errors.any? %>
+                  <div id="error_explanation">
+                    <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+                    <ul>
+                    <% @task.errors.full_messages.each do |msg| %>
                         <li><%= msg %></li>
                       <% end %>
                       </ul>
                     </div>
                   <% end %>
-                  <%= f.hidden_field :project_id, value: @project.id %>
-                  <%= f.hidden_field :user_id, value: current_user.id %>
+                  <%= f.hidden_field :status, value: 'not-started' %>
                   <div class="input-group">
-                    <%= f.text_field :title, class: 'form-control', placeholder: 'Enter task name' %>
+                    <%= f.text_field :name, class: 'form-control', placeholder: 'Enter task name' %>
                     <div class="input-group-append">
-                      <%= button_tag type: 'submit', class: "btn btn-md btn-info" do %>
-                        <i class="fas fa-plus"></i>
-                      <% end %>
+                      <%= f.submit class: 'btn btn-primary' %>
                     </div>
                   </div>
                 <% end %>
