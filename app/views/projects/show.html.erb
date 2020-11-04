@@ -150,36 +150,48 @@
           </ul>
         </div>
         <div class="col-md-4">
-         <h4 class="ml-3">Threads</h4>
+         <h4 class="ml-3">Tasks</h4>
           <ul id="tasks-list">
-            <% @threads.each do |m_thread| %>
-              <% if m_thread.persisted? %>
-              <li class="ml-3" style="overflow-y: smooth-scroll">
+            <% @project.tasks.each do |task| %>
+              <% if task.persisted? %>
+              <li>
                 <div class="card mb-3">
                   <div class="card-body">
-                    <div class="d-flex justify-content-between mb-2">
-                        <h5 class="card-title mb-2">
-                        <span>
-                        <%= m_thread.title %>
-                        </span>
-                        </h5>
-                        <div class="d-flex">
-                          <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), class: 'btn btn-sm btn-success mr-2', title: 'View Thread' do %>
-                              <i class="fas fa-eye"></i>
-                          <% end %>
-                            <% if m_thread.user_id == current_user.id %>
-                              <%= link_to mthread_edit_path(thread_id: m_thread.id, project_id: @project.id), class: 'btn btn-sm btn-info mr-2', title: 'Edit Thread',"data-toggle" => "modal", "data-target" => "#myModal", remote: true do %>
-                                  <i class="fas fa-edit"></i>
-                              <% end %>
-                              <%= link_to mthread_path(thread_id: m_thread.id, project_id: @project.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm', title: 'Delete' do %>
-                                <i class="fas fa-trash"></i>
-                              <% end %>
+                  <div class="d-flex justify-content-between">
+                    <div class="task-status">
+                      <i class="fas fa-grip-vertical grip text-secondary mr-2 handle"></i>
+                      <span class="badge badge-<%= task.color_class %> mb-3"><%= task.status %></span>
+                    </div>
+                    <div>
+                      <div class="dropdown float-left">
+                        <button class="btn btn-outline-<%= task.color_class %> btn-sm mr-1 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <%= task.readable_status %>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <% Task::STATUS_OPTIONS.each do |status| %>
+                            <a class="dropdown-item" href="#" 
+                            data-reflex="click->StatusReflex#change" 
+                            data-id="<%= task.id %>"
+                            data-status="<%= status[1] %>">
+                              <%= status[0] %>
+                            </a>
                           <% end %>
                         </div>
+                      </div>
+                      <%= link_to edit_project_task_path(task.project, task), class: 'btn btn-light btn-sm' do %>
+                        <i class="far fa-edit"></i>
+                      <% end %>
+                      <%= link_to [task.project, task], method: :delete, class: 'btn btn-secondary btn-sm', data: { confirm: 'Are you sure?' } do %>
+                        <i class="fas fa-trash"></i>
+                      <% end %>
                     </div>
-                    <small style="font-size: .9rem">Created by: <%= current_user.author(m_thread.user_id) %></small>
-                    <br>
-                    <small><%= time_ago_in_words(m_thread.created_at) %> ago</small>
+                  </div>
+                    <h5 class="card-title mb-2">
+                      <span>
+                      <%= task.name %>
+                      </span>
+                    </h5>
+                    <p><%= task.description %></p>
                   </div>
                 </div>
               </li>
