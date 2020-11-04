@@ -18,6 +18,7 @@ class PermissionsController < ApplicationController
     def edit
         @permissions = Permission.all
         @col = Colaborator.find(params[:id])
+        @perms = @col.col_has_permissions.map { |p| p.permission_id }
         respond_to do |format|
             format.js
         end

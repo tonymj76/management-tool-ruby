@@ -3,7 +3,7 @@
     <%= f.hidden_field :col_id, value: @col.id %>
     <%= f.collection_check_boxes :permission_ids, @permissions, :id, :name do |b| %>
         <div class="collection-check-box">
-        <% state = @col.col_has_permissions.map { |p| p.permission_id }.include?(b.value) %>
+        <% state = @perms.include?(b.value) %>
         <%= b.check_box(checked: state) %>
         <%= b.label %>
         </div>
