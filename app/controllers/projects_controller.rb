@@ -36,7 +36,7 @@ class ProjectsController < ApplicationController
       @user_id = current_user.id if current_user.present?
       @project = Project.find(params[:id])
       @thread = @project.mthreads.new
-      @task = Task.new
+      @task = @project.tasks.build
         if params[:assoc]
            @assoc = true
            @threads = @project.mthreads.order("created_at desc")

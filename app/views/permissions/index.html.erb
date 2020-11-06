@@ -1,3 +1,12 @@
+
+<% 
+ if current_user.is_admin 
+    path = admin_project_path(params[:project_id])
+  else 
+    path = project_path(params[:project_id])
+ end 
+%>
+<%= link_to 'Back', path, class: 'btn btn-outline-secondary btn-sm mb-3' %>
 <div class="container">
   <div class="card table-striped table-responsive">
   <div class="card-body">
